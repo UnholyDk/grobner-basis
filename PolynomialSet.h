@@ -1,45 +1,27 @@
 #include "PolynomialOrder.h"
 template <typename T>
 class PolynomialSet {
-public:
-    PolynomialSet() {}
+ public:
+  PolynomialSet() {}
 
-    PolynomialSet(const Polynomial<T>& pol) {
-        pols.push_back(pol);
-    }
+  PolynomialSet(const Polynomial<T>& pol) { pols.push_back(pol); }
 
-    auto begin() {
-        return pols.begin();
-    }
+  auto begin() { return pols.begin(); }
 
-    auto end() {
-        return pols.end();
-    }
+  auto end() { return pols.end(); }
 
-    auto begin() const {
-        return pols.begin();
-    }
+  auto begin() const { return pols.begin(); }
 
-    auto end() const {
-        return pols.end();
-    }
+  auto end() const { return pols.end(); }
 
-    size_t size() {
-        return pols.size();
-    }
+  size_t size() { return pols.size(); }
 
-    Polynomial<T> operator[](size_t i) const {
-        return pols[i];
-    }
+  Polynomial<T> operator[](size_t i) const { return pols[i]; }
 
-    Polynomial<T>& operator[](size_t i) {
-        return pols[i];
-    }
+  Polynomial<T>& operator[](size_t i) { return pols[i]; }
 
-    void operator+=(const Polynomial<T>& pol) {
-        pols.push_back(pol);
-    }
+  void operator+=(const Polynomial<T>& pol) { pols.push_back(pol); }
 
-private:
-    std::vector<Polynomial<T>> pols;
+ private:
+  std::vector<Polynomial<T>> pols;
 };
