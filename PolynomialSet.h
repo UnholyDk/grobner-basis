@@ -1,27 +1,30 @@
 #include "PolynomialOrder.h"
-template <typename T>
-class PolynomialSet {
- public:
-  PolynomialSet() {}
 
-  PolynomialSet(const Polynomial<T>& pol) { pols.push_back(pol); }
+namespace grobner {
+ template <typename T>
+ class PolynomialSet {
+  public:
+   PolynomialSet() {}
 
-  auto begin() { return pols.begin(); }
+   PolynomialSet(const Polynomial<T>& pol) { pols.push_back(pol); }
 
-  auto end() { return pols.end(); }
+   auto begin() { return pols.begin(); }
 
-  auto begin() const { return pols.begin(); }
+   auto end() { return pols.end(); }
 
-  auto end() const { return pols.end(); }
+   auto begin() const { return pols.begin(); }
 
-  size_t size() { return pols.size(); }
+   auto end() const { return pols.end(); }
 
-  Polynomial<T> operator[](size_t i) const { return pols[i]; }
+   size_t size() { return pols.size(); }
 
-  Polynomial<T>& operator[](size_t i) { return pols[i]; }
+   Polynomial<T> operator[](size_t i) const { return pols[i]; }
 
-  void operator+=(const Polynomial<T>& pol) { pols.push_back(pol); }
+   Polynomial<T>& operator[](size_t i) { return pols[i]; }
 
- private:
-  std::vector<Polynomial<T>> pols;
-};
+   void operator+=(const Polynomial<T>& pol) { pols.push_back(pol); }
+
+  private:
+   std::vector<Polynomial<T>> pols;
+ };
+}  // namespace grobner
