@@ -137,7 +137,7 @@ class Polynomial {
 template <typename T>
 std::ostream& operator<<(std::ostream& os, Polynomial<T> const& m) {
   std::vector<Monomial<T>> v = m.get_monoms();
-  for (size_t i = 0; i < v.size() - 1; ++i) {
+  for (size_t i = 0; i < v.size(); ++i) {
     os << v[i];
   }
   return os;
