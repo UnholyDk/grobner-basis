@@ -100,7 +100,7 @@ namespace grobner {
 }  // namespace grobner
 
 template <typename T>
-std::ostream& operator<<(std::ostream& os, Monomial<T> const& m) {
+std::ostream& operator<<(std::ostream& os, grobner::Monomial<T> const& m) {
   if (m.get_coef() == 0) return os;
   if (m.get_coef() < 0)
     os << m.get_coef();
