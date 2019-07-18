@@ -137,8 +137,8 @@ namespace grobner {
 }  // namespace grobner
 
 template <typename T>
-std::ostream& operator<<(std::ostream& os, Polynomial<T> const& m) {
-  std::vector<Monomial<T>> v = m.get_monoms();
+std::ostream& operator<<(std::ostream& os, grobner::Polynomial<T> const& m) {
+  std::vector<grobner::Monomial<T>> v = m.get_monoms();
   for (size_t i = 0; i < v.size(); ++i) {
     os << v[i];
   }
