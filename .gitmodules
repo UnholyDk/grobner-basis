@@ -1,0 +1,3 @@
+[submodule "rational"]
+	path = rational
+	url = https://github.com/boostorg/rational.git
