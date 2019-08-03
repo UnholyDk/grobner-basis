@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Algorithm.h"
+#include <boost/rational.hpp>
 
 int main() {
     grobner::PolynomialSet<double> syst;
