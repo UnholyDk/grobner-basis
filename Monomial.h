@@ -3,13 +3,16 @@
 #include <string>
 #include <vector>
 
+using deg_value_type = unsigned int;
+using deg_container_type = std::vector<deg_value_type>;
+
 namespace grobner {
 template <typename T>
 class Monomial {
  public:
   Monomial(T coefficient) : coefficient_(std::move(coefficient)) { degrees_.resize(26); };
 
-  Monomial(T coefficient, const std::vector<int> &degrees)
+  Monomial(T coefficient, const deg_container_type &degrees)
       : coefficient_(std::move(coefficient)) {
     degrees_.resize(26);
     for (int i = 0; i < std::min(degrees.size(), size_t(26)); ++i) {
@@ -27,7 +30,7 @@ class Monomial {
 
   T get_coefficient() const { return coefficient_; }
 
-  std::vector<int> get_degrees() const { return degrees_; }
+  deg_container_type get_degrees() const { return degrees_; }
 
   int operator[](size_t i) const { return degrees_[i]; }
 
@@ -98,7 +101,7 @@ class Monomial {
 
  private:
   T coefficient_;
-  std::vector<int> degrees_;
+  deg_container_type degrees_;
 };
 }  // namespace grobner
 
@@ -109,7 +112,7 @@ std::ostream &operator<<(std::ostream &os, grobner::Monomial<T> const &m) {
     os << m.get_coefficient();
   else
     os << '+' << m.get_coefficient();
-  std::vector<int> v = m.get_degrees();
+  deg_container_type v = m.get_degrees();
   for (size_t i = 0; i < v.size(); ++i) {
     if (v[i] == 0) {
       continue;
