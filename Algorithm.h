@@ -62,9 +62,9 @@ namespace grobner {
   private:
    Monomial<T> L(const Polynomial<T>& p) const { return p[p.size() - 1]; }
 
-   std::pair<std::vector<int>, std::vector<int>> deegs_common_division(
+   std::pair<deg_container_type, deg_container_type> deegs_common_division(
        const Monomial<T>& m_1, const Monomial<T>& m_2) const {
-     std::vector<int> tmp_deegs_1(26), tmp_deegs_2(26);
+     deg_container_type tmp_deegs_1(26), tmp_deegs_2(26);
      for (size_t i = 0; i < 26; ++i) {
        tmp_deegs_1[i] = std::max(m_1[i], m_2[i]) - m_1[i];
        tmp_deegs_2[i] = std::max(m_1[i], m_2[i]) - m_2[i];
@@ -73,7 +73,7 @@ namespace grobner {
    }
 
    Polynomial<T> S(const Polynomial<T>& f_1, const Polynomial<T>& f_2) const {
-     std::pair<std::vector<int>, std::vector<int>> tmp_deegs =
+     std::pair<deg_container_type, deg_container_type> tmp_deegs =
          deegs_common_division(L(f_1), L(f_2));
      Monomial<T> m_1(L(f_2).get_coefficient(), tmp_deegs.first);
      Monomial<T> m_2(L(f_1).get_coefficient(), tmp_deegs.second);

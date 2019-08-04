@@ -3,19 +3,21 @@
 #include <string>
 #include <vector>
 
-using deg_value_type = unsigned int;
+using deg_value_type = int;
 using deg_container_type = std::vector<deg_value_type>;
 
 namespace grobner {
 template <typename T>
 class Monomial {
  public:
-  Monomial(T coefficient) : coefficient_(std::move(coefficient)) { degrees_.resize(26); };
+  Monomial(T coefficient) : coefficient_(std::move(coefficient)) {
+    degrees_.resize(26);
+  };
 
-  Monomial(T coefficient, const deg_container_type &degrees)
+  Monomial(T coefficient, deg_container_type &degrees)
       : coefficient_(std::move(coefficient)) {
     degrees_.resize(26);
-    for (int i = 0; i < std::min(degrees.size(), size_t(26)); ++i) {
+    for (size_t i = 0; i < std::min(degrees.size(), size_t(26)); ++i) {
       degrees_[i] = degrees[i];
     }
   };
@@ -92,7 +94,7 @@ class Monomial {
     for (size_t i = 0; i < 26; ++i) {
       degrees[i] = degrees_[i] - other[i];
     }
-    return {coefficient_ / other.get_coefficient(), degrees};
+    return Monomial(coefficient_ / other.get_coefficient(), degrees);
   }
 
   bool operator==(const Monomial<T> &other) const { return is_equal(other); }
