@@ -75,8 +75,8 @@ namespace grobner {
    Polynomial<T> S(const Polynomial<T>& f_1, const Polynomial<T>& f_2) const {
      std::pair<std::vector<int>, std::vector<int>> tmp_deegs =
          deegs_common_division(L(f_1), L(f_2));
-     Monomial<T> m_1(L(f_2).get_coef(), tmp_deegs.first);
-     Monomial<T> m_2(L(f_1).get_coef(), tmp_deegs.second);
+     Monomial<T> m_1(L(f_2).get_coefficient(), tmp_deegs.first);
+     Monomial<T> m_2(L(f_1).get_coefficient(), tmp_deegs.second);
      return (f_1 * m_1 - f_2 * m_2).sort_pol(ord);
    }
 

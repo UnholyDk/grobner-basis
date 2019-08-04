@@ -1,112 +1,115 @@
+#include <algorithm>
 #include <iostream>
 #include <string>
 #include <vector>
 
 namespace grobner {
- template <typename T>
- class Monomial {
-  public:
-   Monomial(const T& x) : coef(x), deegs(26) { deegs.resize(26); }
+template <typename T>
+class Monomial {
+ public:
+  Monomial(T coefficient) : coefficient_(std::move(coefficient)) { degrees_.resize(26); };
 
-   Monomial(const T& coef_tmp, const std::vector<int>& deegs_tmp)
-       : coef(coef_tmp), deegs(deegs_tmp) {
-     deegs.resize(26);
-   }
+  Monomial(T coefficient, const std::vector<int> &degrees)
+      : coefficient_(std::move(coefficient)) {
+    degrees_.resize(26);
+    for (int i = 0; i < std::min(degrees.size(), size_t(26)); ++i) {
+      degrees_[i] = degrees[i];
+    }
+  };
 
-   auto begin() const { return deegs.begin(); }
+  auto begin() const { return degrees_.begin(); }
 
-   auto end() const { return deegs.end(); }
+  auto end() const { return degrees_.end(); }
 
-   auto rbegin() const { return deegs.rbegin(); }
+  auto rbegin() const { return degrees_.rbegin(); }
 
-   auto rend() const { return deegs.rend(); }
+  auto rend() const { return degrees_.rend(); }
 
-   T get_coef() const { return coef; }
+  T get_coefficient() const { return coefficient_; }
 
-   std::vector<int> get_deegs() const { return deegs; }
+  std::vector<int> get_degrees() const { return degrees_; }
 
-   int operator[](size_t i) const { return deegs[i]; }
+  int operator[](size_t i) const { return degrees_[i]; }
 
-   int& operator[](size_t i) { return deegs[i]; }
+  int &operator[](size_t i) { return degrees_[i]; }
 
-   bool is_equal(const Monomial<T>& other) const {
-     for (size_t i = 0; i < 26; ++i) {
-       if (deegs[i] != other[i]) {
-         return 0;
-       }
-     }
-     return 1;
-   }
+  bool is_equal(const Monomial<T> &other) const {
+    for (size_t i = 0; i < 26; ++i) {
+      if (degrees_[i] != other[i]) {
+        return 0;
+      }
+    }
+    return 1;
+  }
 
-   bool is_div(const Monomial<T>& other) const {
-     for (size_t i = 0; i < 26; ++i) {
-       if (deegs[i] < other[i]) {
-         return false;
-       }
-     }
-     return true;
-   }
+  bool is_div(const Monomial<T> &other) const {
+    for (size_t i = 0; i < 26; ++i) {
+      if (degrees_[i] < other[i]) {
+        return false;
+      }
+    }
+    return true;
+  }
 
-   Monomial<T>& operator*=(const T& x) {
-     coef *= x;
-     return *this;
-   }
+  Monomial<T> &operator*=(const T &x) {
+    coefficient_ *= x;
+    return *this;
+  }
 
-   Monomial<T> operator*(const T& x) const {
-     Monomial<T> tmp_m = *this;
-     return tmp_m *= x;
-   }
+  Monomial<T> operator*(const T &x) const {
+    Monomial<T> tmp_m = *this;
+    return tmp_m *= x;
+  }
 
-   Monomial<T>& operator*=(const Monomial<T>& other) {
-     coef *= other.get_coef();
-     for (size_t i = 0; i < 26; ++i) {
-       deegs[i] += other[i];
-     }
-     return *this;
-   }
+  Monomial<T> &operator*=(const Monomial<T> &other) {
+    coefficient_ *= other.get_coefficient();
+    for (size_t i = 0; i < 26; ++i) {
+      degrees_[i] += other[i];
+    }
+    return *this;
+  }
 
-   Monomial<T> operator*(const Monomial<T>& other) const {
-     Monomial<T> tmp_m = *this;
-     return tmp_m *= other;
-   }
+  Monomial<T> operator*(const Monomial<T> &other) const {
+    Monomial<T> tmp_m = *this;
+    return tmp_m *= other;
+  }
 
-   Monomial<T>& operator+=(const Monomial<T>& other) {
-     // check for equal
-     coef += other.get_coef();
-     return *this;
-   }
+  Monomial<T> &operator+=(const Monomial<T> &other) {
+    coefficient_ += other.get_coefficient();
+    return *this;
+  }
 
-   Monomial<T> operator+(const Monomial<T>& other) const {
-     Monomial<T> tmp_m;
-     return tmp_m += other;
-   }
+  Monomial<T> operator+(const Monomial<T> &other) const {
+    Monomial<T> tmp_m;
+    return tmp_m += other;
+  }
 
-   Monomial<T> operator/(const Monomial<T>& other) const {
-     std::vector<int> tmp_deegs(26);
-     for (size_t i = 0; i < 26; ++i) {
-       tmp_deegs[i] = deegs[i] - other[i];
-     }
-     return {coef / other.get_coef(), tmp_deegs};
-   }
+  Monomial<T> operator/(const Monomial<T> &other) const {
+    std::vector<int> degrees(26);
+    for (size_t i = 0; i < 26; ++i) {
+      degrees[i] = degrees_[i] - other[i];
+    }
+    return {coefficient_ / other.get_coefficient(), degrees};
+  }
 
-   bool operator==(const Monomial<T>& other) const { return is_equal(other); }
+  bool operator==(const Monomial<T> &other) const { return is_equal(other); }
 
-   bool operator!=(const Monomial<T>& other) const { return !(is_equal(other)); }
+  bool operator!=(const Monomial<T> &other) const { return !(is_equal(other)); }
 
-  private:
-   T coef;
-   std::vector<int> deegs;
- };
+ private:
+  T coefficient_;
+  std::vector<int> degrees_;
+};
 }  // namespace grobner
 
 template <typename T>
-std::ostream& operator<<(std::ostream& os, grobner::Monomial<T> const& m) {
-  if (m.get_coef() == 0) return os;
-  if (m.get_coef() < 0)
-    os << m.get_coef();
+std::ostream &operator<<(std::ostream &os, grobner::Monomial<T> const &m) {
+  if (m.get_coefficient() == 0) return os;
+  if (m.get_coefficient() < 0)
+    os << m.get_coefficient();
   else
-    os << '+' << m.get_coef();
-  std::vector<int> v = m.get_deegs();
+    os << '+' << m.get_coefficient();
+  std::vector<int> v = m.get_degrees();
   for (size_t i = 0; i < v.size(); ++i) {
     if (v[i] == 0) {
       continue;

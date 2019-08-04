@@ -23,7 +23,7 @@ namespace grobner {
 
    void dell_0() {
      for (size_t i = 0; i < size();) {
-       if (monoms[i].get_coef() == 0) {
+       if (monoms[i].get_coefficient() == 0) {
          monoms.erase(monoms.begin() + i);
        } else {
          ++i;
@@ -45,7 +45,7 @@ namespace grobner {
      bool diff = true;
      for (size_t i = 0; i < monoms.size(); ++i) {
        if (monoms[i].is_equal(other)) {
-         monoms[i] += other.get_coef();
+         monoms[i] += other.get_coefficient();
          diff = false;
        }
      }
