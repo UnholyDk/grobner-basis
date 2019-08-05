@@ -105,17 +105,15 @@ class Monomial {
 };
 
 void print_variable(std::ostream &os, size_t i, deg_value_type deg) {
-  os << char('a'+i);
-  if (deg != 1)
-    os << '^' << deg;
+  os << char('a' + i);
+  if (deg != 1) os << '^' << deg;
 }
 
 template <typename T>
 void print_variables(std::ostream &os, Monomial<T> const &m) {
   size_t i = 0;
   for (auto &x : m) {
-    if (x != 0)
-      print_variable(os, i, x);
+    if (x != 0) print_variable(os, i, x);
     ++i;
   }
 }
@@ -127,7 +125,6 @@ std::ostream &operator<<(std::ostream &os, grobner::Monomial<T> const &m) {
     os << m.get_coefficient();
   else
     os << '+' << m.get_coefficient();
-  if (m.get_coefficient() != 0)
-    print_variables(os, m);
+  if (m.get_coefficient() != 0) grobner::print_variables(os, m);
   return os;
 }
