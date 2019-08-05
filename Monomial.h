@@ -61,8 +61,7 @@ class Monomial {
     return true;
   }
 
-  Monomial &operator*=(
-      const TCoefficient &x) {
+  Monomial &operator*=(const TCoefficient &x) {
     coefficient_ *= x;
     return *this;
   }

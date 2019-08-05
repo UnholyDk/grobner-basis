@@ -59,7 +59,7 @@ class Polynomial {
   }
 
   Polynomial operator+(const Monomial<T, TNumberOfVariables>& other) const {
-    Polynomial<T, TNumberOfVariables> tmp_p = *this;
+    Polynomial tmp_p = *this;
     return tmp_p += other;
   }
 
@@ -78,7 +78,7 @@ class Polynomial {
   }
 
   Polynomial operator+(const Polynomial& other) const {
-    Polynomial<T, TNumberOfVariables> tmp_pol = *this;
+    Polynomial tmp_pol = *this;
     return tmp_pol += other;
   }
 
@@ -91,12 +91,12 @@ class Polynomial {
   }
 
   Polynomial operator*(const T& x) const {
-    Polynomial<T, TNumberOfVariables> tmp_p = *this;
+    Polynomial tmp_p = *this;
     return tmp_p *= x;
   }
 
   Polynomial& operator*=(const Polynomial& other) {
-    Polynomial<T, TNumberOfVariables> tmp_p = *this;
+    Polynomial tmp_p = *this;
     monoms.clear();
     for (const auto& mon_from_this : tmp_p.monoms) {
       for (const auto& mon_from_other : other.monoms) {
