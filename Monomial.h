@@ -46,10 +46,10 @@ class Monomial {
   bool is_equal(const Monomial<TCoefficient, TNumberOfVariables> &other) const {
     for (size_t i = 0; i < TNumberOfVariables; ++i) {
       if (degrees_[i] != other[i]) {
-        return 0;
+        return false;
       }
     }
-    return 1;
+    return true;
   }
 
   bool is_div(const Monomial<TCoefficient, TNumberOfVariables> &other) const {

@@ -39,7 +39,7 @@ class MonomialOrder {
         return func(mon1, mon2);
       }
     }
-    return 0;
+    return false;
   }
 
   bool compair_less_or_eq(const Monomial<T, TNumberOfVariables>& mon1,
@@ -49,7 +49,7 @@ class MonomialOrder {
         return func(mon1, mon2);
       }
     }
-    return 1;
+    return true;
   }
 
  private:
@@ -66,6 +66,6 @@ bool lexicograph(const Monomial<T, TNumberOfVariables>& mon1,
       return mon1[i] < mon2[i];
     }
   }
-  return 0;
+  return false;
 }
 }  // namespace grobner
