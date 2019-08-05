@@ -32,7 +32,10 @@ class Monomial {
 
   T get_coefficient() const { return coefficient_; }
 
-  int operator[](size_t i) const { return degrees_[i]; }
+  int operator[](size_t i) const {
+    if (0 <= i && i <= 25) return degrees_[i];
+    return 0;
+  }
 
   int &operator[](size_t i) { return degrees_[i]; }
 
