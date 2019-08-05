@@ -43,7 +43,7 @@ class Monomial {
 
   int &operator[](size_t i) { return degrees_[i]; }
 
-  bool is_equal(const Monomial<TCoefficient, TNumberOfVariables> &other) const {
+  bool is_equal(const Monomial &other) const {
     for (size_t i = 0; i < TNumberOfVariables; ++i) {
       if (degrees_[i] != other[i]) {
         return false;
@@ -52,7 +52,7 @@ class Monomial {
     return true;
   }
 
-  bool is_div(const Monomial<TCoefficient, TNumberOfVariables> &other) const {
+  bool is_div(const Monomial &other) const {
     for (size_t i = 0; i < TNumberOfVariables; ++i) {
       if (degrees_[i] < other[i]) {
         return false;
@@ -61,20 +61,18 @@ class Monomial {
     return true;
   }
 
-  Monomial<TCoefficient, TNumberOfVariables> &operator*=(
+  Monomial &operator*=(
       const TCoefficient &x) {
     coefficient_ *= x;
     return *this;
   }
 
-  Monomial<TCoefficient, TNumberOfVariables> operator*(
-      const TCoefficient &x) const {
-    Monomial<TCoefficient, TNumberOfVariables> tmp_m = *this;
+  Monomial operator*(const TCoefficient &x) const {
+    Monomial tmp_m = *this;
     return tmp_m *= x;
   }
 
-  Monomial<TCoefficient, TNumberOfVariables> &operator*=(
-      const Monomial<TCoefficient, TNumberOfVariables> &other) {
+  Monomial &operator*=(const Monomial &other) {
     coefficient_ *= other.get_coefficient();
     for (size_t i = 0; i < TNumberOfVariables; ++i) {
       degrees_[i] += other[i];
@@ -82,26 +80,21 @@ class Monomial {
     return *this;
   }
 
-  Monomial<TCoefficient, TNumberOfVariables> operator*(
-      const Monomial<TCoefficient, TNumberOfVariables> &other) const {
-    Monomial<TCoefficient, TNumberOfVariables> tmp_m = *this;
+  Monomial operator*(const Monomial &other) const {
+    Monomial tmp_m = *this;
     return tmp_m *= other;
   }
 
-  Monomial<TCoefficient, TNumberOfVariables> &operator+=(
-      const Monomial<TCoefficient, TNumberOfVariables> &other) {
+  Monomial &operator+=(const Monomial &other) {
     coefficient_ += other.get_coefficient();
     return *this;
   }
 
-  Monomial<TCoefficient, TNumberOfVariables> operator+(
-      const Monomial<TCoefficient, TNumberOfVariables> &other) const {
-    Monomial<TCoefficient, TNumberOfVariables> tmp_m;
+  Monomial operator+(const Monomial &other) const {Monomial tmp_m;
     return tmp_m += other;
   }
 
-  Monomial<TCoefficient, TNumberOfVariables> operator/(
-      const Monomial<TCoefficient, TNumberOfVariables> &other) const {
+  Monomial operator/(const Monomial &other) const {
     deg_container_type degrees;
     for (size_t i = 0; i < TNumberOfVariables; ++i) {
       degrees[i] = degrees_[i] - other[i];
@@ -109,13 +102,11 @@ class Monomial {
     return Monomial(coefficient_ / other.get_coefficient(), degrees);
   }
 
-  bool operator==(
-      const Monomial<TCoefficient, TNumberOfVariables> &other) const {
+  bool operator==(const Monomial &other) const {
     return is_equal(other);
   }
 
-  bool operator!=(
-      const Monomial<TCoefficient, TNumberOfVariables> &other) const {
+  bool operator!=(const Monomial &other) const {
     return !(is_equal(other));
   }
 
