@@ -129,7 +129,7 @@ class Polynomial {
     std::sort(monoms.begin(), monoms.end(),
               [&ord](Monomial<T, TNumberOfVariables> const& mon1,
                      Monomial<T, TNumberOfVariables> const& mon2) {
-                return ord.compair_less(mon1, mon2);
+                return ord.is_less(mon1, mon2);
               });
     return *this;
   }
