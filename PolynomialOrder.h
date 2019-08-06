@@ -15,7 +15,7 @@ class PolynomialOrder {
     mon_order = tmp_mon_ord;
   }
 
-  bool compair_less(Polynomial<T, TNumberOfVariables>& pol1,
+  bool is_less(Polynomial<T, TNumberOfVariables>& pol1,
                     Polynomial<T, TNumberOfVariables>& pol2) {
     pol1.sort_pol(mon_order);
     pol2.sort_pol(mon_order);
@@ -24,7 +24,7 @@ class PolynomialOrder {
     auto it2 = pol2.rbegin();
     while (it1 != pol1.rend() && it2 != pol2.rend()) {
       if (*it1 != *it2) {
-        return mon_order.compair_less(*it1, *it2);
+        return mon_order.is_less(*it1, *it2);
       }
       ++it1;
       ++it2;
