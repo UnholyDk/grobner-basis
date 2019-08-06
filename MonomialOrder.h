@@ -32,7 +32,7 @@ class MonomialOrder {
     return orders[i];
   }
 
-  bool compair_less(const Monomial<T, TNumberOfVariables>& mon1,
+  bool is_less(const Monomial<T, TNumberOfVariables>& mon1,
                     const Monomial<T, TNumberOfVariables>& mon2) const {
     for (auto func : orders) {
       if (func(mon1, mon2) != func(mon2, mon1)) {
@@ -42,7 +42,7 @@ class MonomialOrder {
     return false;
   }
 
-  bool compair_less_or_eq(const Monomial<T, TNumberOfVariables>& mon1,
+  bool is_less_eq(const Monomial<T, TNumberOfVariables>& mon1,
                           const Monomial<T, TNumberOfVariables>& mon2) const {
     for (auto func : orders) {
       if (func(mon1, mon2) != func(mon2, mon1)) {
