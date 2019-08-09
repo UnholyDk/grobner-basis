@@ -12,9 +12,7 @@ class MonomialOrder {
  public:
   MonomialOrder() {}
 
-  MonomialOrder(const compare_container_type & tmp_mon_ord) {
-    comparators_ = tmp_mon_ord;
-  }
+  MonomialOrder(compare_container_type comparators) : comparators_(std::move(comparators)) {}
 
   void add_order(const compare_storage_type & func) {
     comparators_.push_back(func);

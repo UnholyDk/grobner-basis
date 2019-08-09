@@ -4,14 +4,14 @@ namespace grobner {
 template <typename T, number_of_variables_type TNumberOfVariables>
 class Algorithm {
  public:
-  Algorithm(const MonomialOrder<T, TNumberOfVariables>& order) : ord(std::move(order)) {}
+  Algorithm(const MonomialOrder<T, TNumberOfVariables>& order) : ord_(std::move(order)) {}
 
   Polynomial<T, TNumberOfVariables> reduction(
       Polynomial<T, TNumberOfVariables> g,
       PolynomialSet<T, TNumberOfVariables> syst_f) const {
-    g.sort_pol(ord);
+    g.sort_pol(ord_);
     for (auto& pol : syst_f) {
-      pol.sort_pol(ord);
+      pol.sort_pol(ord_);
     }
 
     for (size_t i = 0; i < g.size(); ++i) {
@@ -30,7 +30,7 @@ class Algorithm {
                 pol_from_s * tmp_c;  // shit is here
             //
             g -= tmp_p;
-            g.sort_pol(ord);
+            g.sort_pol(ord_);
             if (i >= g.size()) {
               can_red = false;
             } else {
@@ -42,14 +42,14 @@ class Algorithm {
         }
       }
     }
-    return g.sort_pol(ord);
+    return g.sort_pol(ord_);
   }
 
   PolynomialSet<T, TNumberOfVariables> Buchberger(
       const PolynomialSet<T, TNumberOfVariables>& other_syst) const {
     PolynomialSet<T, TNumberOfVariables> ans_syst = other_syst;
     for (size_t i = 0; i < ans_syst.size(); ++i) {
-      (ans_syst[i]).sort_pol(ord);
+      (ans_syst[i]).sort_pol(ord_);
     }
     for (size_t i = 0; i < ans_syst.size(); ++i) {
       for (int j = i - 1; j >= 0; --j) {
@@ -90,9 +90,9 @@ class Algorithm {
                                         tmp_deegs.first);
     Monomial<T, TNumberOfVariables> m_2(L(f_1).get_coefficient(),
                                         tmp_deegs.second);
-    return (f_1 * m_1 - f_2 * m_2).sort_pol(ord);
+    return (f_1 * m_1 - f_2 * m_2).sort_pol(ord_);
   }
 
-  MonomialOrder<T, TNumberOfVariables> ord;
+  MonomialOrder<T, TNumberOfVariables> ord_;
 };
 }  // namespace grobner

@@ -7,30 +7,30 @@ class PolynomialSet {
   PolynomialSet() {}
 
   PolynomialSet(const Polynomial<T, TNumberOfVariables>& pol) {
-    pols.push_back(pol);
+    pols_.push_back(pol);
   }
 
-  auto begin() { return pols.begin(); }
+  auto begin() { return pols_.begin(); }
 
-  auto end() { return pols.end(); }
+  auto end() { return pols_.end(); }
 
-  auto begin() const { return pols.begin(); }
+  auto begin() const { return pols_.begin(); }
 
-  auto end() const { return pols.end(); }
+  auto end() const { return pols_.end(); }
 
-  size_t size() { return pols.size(); }
+  size_t size() { return pols_.size(); }
 
   Polynomial<T, TNumberOfVariables> operator[](size_t i) const {
-    return pols[i];
+    return pols_[i];
   }
 
-  Polynomial<T, TNumberOfVariables>& operator[](size_t i) { return pols[i]; }
+  Polynomial<T, TNumberOfVariables>& operator[](size_t i) { return pols_[i]; }
 
   void operator+=(const Polynomial<T, TNumberOfVariables>& pol) {
-    pols.push_back(pol);
+    pols_.push_back(pol);
   }
 
  private:
-  std::vector<Polynomial<T, TNumberOfVariables>> pols;
+  std::vector<Polynomial<T, TNumberOfVariables>> pols_;
 };
 }  // namespace grobner
