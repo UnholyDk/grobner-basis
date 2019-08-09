@@ -25,7 +25,7 @@ class Polynomial {
 
   void dell_0() {
     for (size_t i = 0; i < size();) {
-      if (monoms[i].get_coefficient() == 0) {
+      if (monoms[i].get_coefficient() == 0 && monoms.size() > 1) {
         monoms.erase(monoms.begin() + i);
       } else {
         ++i;
@@ -35,8 +35,8 @@ class Polynomial {
 
   void dell_same_monoms_or_add(const Monomial<T, TNumberOfVariables>& other) {
     for (auto& monom : monoms) {
-      if (monom.is_equal(other)) {
-        monom += other;
+      if (monom.equal_of_variables(other)) {
+        monom.merge(other);
         return;
       }
     }
@@ -46,8 +46,8 @@ class Polynomial {
   Polynomial& operator+=(const Monomial<T, TNumberOfVariables>& other) {
     bool diff = true;
     for (size_t i = 0; i < monoms.size(); ++i) {
-      if (monoms[i].is_equal(other)) {
-        monoms[i] += other.get_coefficient();
+      if (monoms[i].equal_of_variables(other)) {
+        monoms[i].merge(other);
         diff = false;
       }
     }
@@ -145,7 +145,7 @@ template <class T, number_of_variables_type TNumberOfVariables>
 std::ostream& operator<<(
     std::ostream& os, grobner::Polynomial<T, TNumberOfVariables> const& pol) {
   for (auto& mon : pol) {
-    os << mon;
+    os << "+(" << mon << ')';
   }
   return os;
 }

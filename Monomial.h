@@ -43,7 +43,7 @@ class Monomial {
 
   int &operator[](size_t i) { return degrees_[i]; }
 
-  bool is_equal(const Monomial &other) const {
+  bool equal_of_variables(const Monomial &other) const {
     for (size_t i = 0; i < TNumberOfVariables; ++i) {
       if (degrees_[i] != other[i]) {
         return false;
@@ -84,13 +84,14 @@ class Monomial {
     return tmp_m *= other;
   }
 
-  Monomial &operator+=(const Monomial &other) {
-    coefficient_ += other.get_coefficient();
+  Monomial& merge(const Monomial &other) {
+    coefficient_ += other.coefficient_;
     return *this;
   }
 
-  Monomial operator+(const Monomial &other) const {Monomial tmp_m;
-    return tmp_m += other;
+  Monomial merge(const Monomial &other) const {
+    Monomial tmp_m = *this;
+    return tmp_m.merge(other);
   }
 
   Monomial operator/(const Monomial &other) const {
@@ -102,11 +103,11 @@ class Monomial {
   }
 
   bool operator==(const Monomial &other) const {
-    return is_equal(other);
+    return coefficient_ == other.coefficient_ == 0 || (equal_of_variables(other) && coefficient_ == other.coefficient_);
   }
 
   bool operator!=(const Monomial &other) const {
-    return !(is_equal(other));
+    return !(*this == other);
   }
 
  private:
@@ -134,10 +135,7 @@ template <class TCoefficient, number_of_variables_type TNumberOfVariables>
 std::ostream &operator<<(
     std::ostream &os,
     grobner::Monomial<TCoefficient, TNumberOfVariables> const &m) {
-  if (m.get_coefficient() <= 0)
-    os << m.get_coefficient();
-  else
-    os << '+' << m.get_coefficient();
+  os << m.get_coefficient();
   if (m.get_coefficient() != 0) grobner::print_variables(os, m);
   return os;
 }
