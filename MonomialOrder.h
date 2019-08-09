@@ -6,23 +6,23 @@ template <typename T, number_of_variables_type TNumberOfVariables>
 class MonomialOrder {
   using monomial = Monomial<T, TNumberOfVariables>;
   using compare_signature_type = bool(const monomial&, const monomial&);
-  using compare_storage_type = std::function<compare_signature_type>;
-  using compare_container_type = std::vector<compare_storage_type>;
+  using compare_type = std::function<compare_signature_type>;
+  using compare_container_type = std::vector<compare_type>;
 
  public:
   MonomialOrder() {}
 
   MonomialOrder(compare_container_type comparators) : comparators_(std::move(comparators)) {}
 
-  void add_order(const compare_storage_type & func) {
+  void add_order(const compare_type & func) {
     comparators_.push_back(func);
   }
 
-  compare_storage_type operator[](size_t i) const {
+  compare_type operator[](size_t i) const {
     return comparators_[i];
   }
 
-  compare_storage_type operator[](size_t i) {
+  compare_type operator[](size_t i) {
     return comparators_[i];
   }
 
@@ -36,12 +36,7 @@ class MonomialOrder {
   }
 
   bool is_less_eq(const monomial& mon1, const monomial & mon2) const {
-    for (auto func : comparators_) {
-      if (func(mon1, mon2) != func(mon2, mon1)) {
-        return func(mon1, mon2);
-      }
-    }
-    return true;
+    return !is_less(mon2, mon1);
   }
 
  private:
