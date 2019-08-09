@@ -6,8 +6,8 @@ class PolynomialSet {
  public:
   PolynomialSet() {}
 
-  PolynomialSet(const Polynomial<T, TNumberOfVariables>& pol) {
-    pols_.push_back(pol);
+  PolynomialSet(Polynomial<T, TNumberOfVariables> pol) {
+    pols_.emplace_back(std::move(pol));
   }
 
   auto begin() { return pols_.begin(); }

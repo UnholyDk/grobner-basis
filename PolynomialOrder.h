@@ -29,7 +29,7 @@ class PolynomialOrder {
       ++it1;
       ++it2;
     }
-    return pol1.size() < pol2.size();
+    return pol1.amount_of_monomials() < pol2.amount_of_monomials();
   }
 
  private:

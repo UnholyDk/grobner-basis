@@ -18,14 +18,6 @@ class MonomialOrder {
     comparators_.push_back(func);
   }
 
-  compare_type operator[](size_t i) const {
-    return comparators_[i];
-  }
-
-  compare_type operator[](size_t i) {
-    return comparators_[i];
-  }
-
   bool is_less(const monomial & mon1, const monomial & mon2) const {
     for (auto func : comparators_) {
       if (func(mon1, mon2) != func(mon2, mon1)) {

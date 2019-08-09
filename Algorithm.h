@@ -14,7 +14,7 @@ class Algorithm {
       pol.sort_pol(ord_);
     }
 
-    for (size_t i = 0; i < g.size(); ++i) {
+    for (size_t i = 0; i < g.amount_of_monomials(); ++i) {
       Monomial<T, TNumberOfVariables> mon_from_g = g[i];
       bool can_red = true;
       while (can_red) {
@@ -31,7 +31,7 @@ class Algorithm {
             //
             g -= tmp_p;
             g.sort_pol(ord_);
-            if (i >= g.size()) {
+            if (i >= g.amount_of_monomials()) {
               can_red = false;
             } else {
               mon_from_g = g[i];
@@ -55,7 +55,7 @@ class Algorithm {
       for (int j = i - 1; j >= 0; --j) {
         Polynomial<T, TNumberOfVariables> red_s_pol =
             reduction(S(ans_syst[i], ans_syst[j]), ans_syst);
-        if (red_s_pol.size() !=
+        if (red_s_pol.amount_of_monomials() !=
             0) {  // need fixed this to check empty polynomial
           ans_syst += red_s_pol;
         }
@@ -67,7 +67,7 @@ class Algorithm {
  private:
   Monomial<T, TNumberOfVariables> L(
       const Polynomial<T, TNumberOfVariables>& p) const {
-    return p[p.size() - 1];
+    return p[p.amount_of_monomials() - 1];
   }
 
   std::pair<deg_container_type, deg_container_type> deegs_common_division(

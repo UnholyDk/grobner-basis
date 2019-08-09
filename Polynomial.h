@@ -55,7 +55,6 @@ class Polynomial {
     for (const auto& mon_from_other : other.monomials_) {
       *this += mon_from_other;
     }
-    dell_all_zero();
     return *this;
   }
 
@@ -64,12 +63,16 @@ class Polynomial {
     return std::move(tmp_pol += other);
   }
 
-  Polynomial& operator*=(const T& x) {
-    for (auto& mon : monomials_) {
-      mon *= x;
+  Polynomial& operator*=(const T& coefficient) {
+    if (coefficient == 0) {
+      monomials_.clear();
+      return *this;
+    } else {
+      for (auto& mon : monomials_) {
+        mon *= coefficient;
+      }
+      return *this;
     }
-    dell_all_zero();
-    return *this;
   }
 
   Polynomial operator*(const T& x) const {
@@ -95,10 +98,7 @@ class Polynomial {
   }
 
   Polynomial& operator-=(const Polynomial& other) {
-    *this *= -1;
-    *this += other;
-    *this *= -1;
-    dell_all_zero();
+    *this += other * (-1);
     return *this;
   }
 
@@ -116,12 +116,14 @@ class Polynomial {
     return *this;
   }
 
-  size_t size() { return monomials_.size(); }
+  size_t amount_of_monomials() const { return monomials_.size(); }
+
+  [[nodiscard]] bool empty() const { return amount_of_monomials() == 0; }
 
  private:
   container_type monomials_;
   void dell_all_zero() {
-    for (size_t i = 0; i < size();) {
+    for (size_t i = 0; i < amount_of_monomials();) {
       if (monomials_[i].get_coefficient() == 0 && monomials_.size() > 1) {
         monomials_.erase(monomials_.begin() + i);
       } else {
@@ -135,6 +137,8 @@ class Polynomial {
 template <class T, number_of_variables_type TNumberOfVariables>
 std::ostream& operator<<(
     std::ostream& os, grobner::Polynomial<T, TNumberOfVariables> const& pol) {
+  if (pol.empty())
+    os << T(0);
   for (auto& mon : pol) {
     os << "+(" << mon << ')';
   }
