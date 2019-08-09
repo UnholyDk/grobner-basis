@@ -9,124 +9,106 @@ class Polynomial {
  public:
   Polynomial() {}
 
-  Polynomial(const Monomial<T, TNumberOfVariables>& other_mon) {
-    monoms_.push_back(other_mon);
+  Polynomial(Monomial<T, TNumberOfVariables>& monomial) {
+    monomials_.emplace_back(std::move(monomial));
+    dell_all_zero();
   }
 
-  auto begin() const { return monoms_.begin(); }
+  auto begin() const { return monomials_.begin(); }
 
-  auto end() const { return monoms_.end(); }
+  auto end() const { return monomials_.end(); }
 
-  auto rbegin() const { return monoms_.rbegin(); }
+  auto rbegin() const { return monomials_.rbegin(); }
 
-  auto rend() const { return monoms_.rend(); }
+  auto rend() const { return monomials_.rend(); }
 
-  size_t size() const { return monoms_.size(); }
+  size_t size() const { return monomials_.size(); }
 
-  void dell_0() {
-    for (size_t i = 0; i < size();) {
-      if (monoms_[i].get_coefficient() == 0 && monoms_.size() > 1) {
-        monoms_.erase(monoms_.begin() + i);
-      } else {
-        ++i;
-      }
-    }
-  }
-
-  void dell_same_monoms_or_add(const Monomial<T, TNumberOfVariables>& other) {
-    for (auto& monom : monoms_) {
-      if (monom.equal_of_variables(other)) {
-        monom.merge(other);
-        return;
-      }
-    }
-    monoms_.push_back(other);
-  }
-
-  Polynomial& operator+=(const Monomial<T, TNumberOfVariables>& other) {
+  Polynomial& operator+=(const Monomial<T, TNumberOfVariables>& monomial) {
     bool diff = true;
-    for (size_t i = 0; i < monoms_.size(); ++i) {
-      if (monoms_[i].equal_of_variables(other)) {
-        monoms_[i].merge(other);
+    for (auto& my_monomial : monomials_) {
+      if (my_monomial.equal_of_variables(monomial)) {
+        my_monomial.merge_monomial(monomial);
         diff = false;
+        break;
       }
     }
     if (diff) {
-      monoms_.push_back(other);
+      monomials_.push_back(monomial);
     }
-    dell_0();
+    dell_all_zero();
     return *this;
   }
 
   Polynomial operator+(const Monomial<T, TNumberOfVariables>& other) const {
     Polynomial tmp_p = *this;
-    return tmp_p += other;
+    return std::move(tmp_p += other);
   }
 
   Monomial<T, TNumberOfVariables> operator[](size_t i) const {
-    return monoms_[i];
+    return monomials_[i];
   }
 
-  Monomial<T, TNumberOfVariables>& operator[](size_t i) { return monoms_[i]; }
+  Monomial<T, TNumberOfVariables>& operator[](size_t i) { return monomials_[i]; }
 
   Polynomial& operator+=(const Polynomial& other) {
-    for (const auto& mon_from_other : other.monoms_) {
+    for (const auto& mon_from_other : other.monomials_) {
       *this += mon_from_other;
     }
-    dell_0();
+    dell_all_zero();
     return *this;
   }
 
   Polynomial operator+(const Polynomial& other) const {
     Polynomial tmp_pol = *this;
-    return tmp_pol += other;
+    return std::move(tmp_pol += other);
   }
 
   Polynomial& operator*=(const T& x) {
-    for (auto& mon : monoms_) {
+    for (auto& mon : monomials_) {
       mon *= x;
     }
-    dell_0();
+    dell_all_zero();
     return *this;
   }
 
   Polynomial operator*(const T& x) const {
     Polynomial tmp_p = *this;
-    return tmp_p *= x;
+    return std::move(tmp_p *= x);
   }
 
   Polynomial& operator*=(const Polynomial& other) {
     Polynomial tmp_p = *this;
-    monoms_.clear();
-    for (const auto& mon_from_this : tmp_p.monoms_) {
-      for (const auto& mon_from_other : other.monoms_) {
+    monomials_.clear();
+    for (const auto& mon_from_this : tmp_p.monomials_) {
+      for (const auto& mon_from_other : other.monomials_) {
         *this += mon_from_this * mon_from_other;
       }
     }
-    dell_0();
+    dell_all_zero();
     return *this;
   }
 
   Polynomial operator*(const Polynomial& other) const {
     Polynomial tmp_p = *this;
-    return tmp_p *= other;
+    return std::move(tmp_p *= other);
   }
 
   Polynomial& operator-=(const Polynomial& other) {
     *this *= -1;
     *this += other;
     *this *= -1;
-    dell_0();
+    dell_all_zero();
     return *this;
   }
 
   Polynomial operator-(const Polynomial& other) const {
     Polynomial tmp_p = *this;
-    return tmp_p -= other;
+    return std::move(tmp_p -= other);
   }
 
   Polynomial sort_pol(const MonomialOrder<T, TNumberOfVariables>& ord) {
-    std::sort(monoms_.begin(), monoms_.end(),
+    std::sort(monomials_.begin(), monomials_.end(),
               [&ord](Monomial<T, TNumberOfVariables> const& mon1,
                      Monomial<T, TNumberOfVariables> const& mon2) {
                 return ord.is_less(mon1, mon2);
@@ -134,10 +116,19 @@ class Polynomial {
     return *this;
   }
 
-  size_t size() { return monoms_.size(); }
+  size_t size() { return monomials_.size(); }
 
  private:
-  container_type monoms_;
+  container_type monomials_;
+  void dell_all_zero() {
+    for (size_t i = 0; i < size();) {
+      if (monomials_[i].get_coefficient() == 0 && monomials_.size() > 1) {
+        monomials_.erase(monomials_.begin() + i);
+      } else {
+        ++i;
+      }
+    }
+  }
 };
 }  // namespace grobner
 

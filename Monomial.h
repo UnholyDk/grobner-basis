@@ -18,8 +18,7 @@ class Monomial {
  public:
   Monomial(TCoefficient coefficient) : coefficient_(std::move(coefficient)){};
 
-  Monomial(TCoefficient coefficient, deg_container_type &degrees)
-      : coefficient_(std::move(coefficient)) {
+  Monomial(TCoefficient coefficient, deg_container_type &degrees) : coefficient_(std::move(coefficient)) {
     for (size_t i = 0; i < std::min(degrees.size(), size_t(TNumberOfVariables));
          ++i) {
       degrees_[i] = degrees[i];
@@ -68,7 +67,7 @@ class Monomial {
 
   Monomial operator*(const TCoefficient &x) const {
     Monomial tmp_m = *this;
-    return tmp_m *= x;
+    return std::move(tmp_m *= x);
   }
 
   Monomial &operator*=(const Monomial &other) {
@@ -81,10 +80,10 @@ class Monomial {
 
   Monomial operator*(const Monomial &other) const {
     Monomial tmp_m = *this;
-    return tmp_m *= other;
+    return std::move(tmp_m *= other);
   }
 
-  Monomial& merge(const Monomial &other) {
+  Monomial& merge_monomial(const Monomial &other) {
     coefficient_ += other.coefficient_;
     return *this;
   }
