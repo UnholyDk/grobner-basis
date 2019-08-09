@@ -89,11 +89,6 @@ class Monomial {
     return *this;
   }
 
-  Monomial merge(const Monomial &other) const {
-    Monomial tmp_m = *this;
-    return tmp_m.merge(other);
-  }
-
   Monomial operator/(const Monomial &other) const {
     deg_container_type degrees;
     for (size_t i = 0; i < TNumberOfVariables; ++i) {

@@ -4,37 +4,32 @@
 namespace grobner {
 template <typename T, number_of_variables_type TNumberOfVariables>
 class MonomialOrder {
+  using monomial = Monomial<T, TNumberOfVariables>;
+  using compare_signature_type = bool(const monomial&, const monomial&);
+  using compare_storage_type = std::function<compare_signature_type>;
+  using compare_container_type = std::vector<compare_storage_type>;
+
  public:
   MonomialOrder() {}
 
-  MonomialOrder(const std::vector<
-                std::function<bool(const Monomial<T, TNumberOfVariables>&,
-                                   const Monomial<T, TNumberOfVariables>&)>>&
-                    tmp_mon_ord) {
-    orders = tmp_mon_ord;
+  MonomialOrder(const compare_container_type & tmp_mon_ord) {
+    comparators_ = tmp_mon_ord;
   }
 
-  void add_order(
-      const std::function<bool(const Monomial<T, TNumberOfVariables>&,
-                               const Monomial<T, TNumberOfVariables>&)>& func) {
-    orders.push_back(func);
+  void add_order(const compare_storage_type & func) {
+    comparators_.push_back(func);
   }
 
-  std::function<bool(const Monomial<T, TNumberOfVariables>&,
-                     const Monomial<T, TNumberOfVariables>&)>
-  operator[](size_t i) const {
-    return orders[i];
+  compare_storage_type operator[](size_t i) const {
+    return comparators_[i];
   }
 
-  std::function<bool(const Monomial<T, TNumberOfVariables>&,
-                     const Monomial<T, TNumberOfVariables>&)>&
-  operator[](size_t i) {
-    return orders[i];
+  compare_storage_type operator[](size_t i) {
+    return comparators_[i];
   }
 
-  bool is_less(const Monomial<T, TNumberOfVariables>& mon1,
-                    const Monomial<T, TNumberOfVariables>& mon2) const {
-    for (auto func : orders) {
+  bool is_less(const monomial & mon1, const monomial & mon2) const {
+    for (auto func : comparators_) {
       if (func(mon1, mon2) != func(mon2, mon1)) {
         return func(mon1, mon2);
       }
@@ -42,9 +37,8 @@ class MonomialOrder {
     return false;
   }
 
-  bool is_less_eq(const Monomial<T, TNumberOfVariables>& mon1,
-                          const Monomial<T, TNumberOfVariables>& mon2) const {
-    for (auto func : orders) {
+  bool is_less_eq(const monomial& mon1, const monomial & mon2) const {
+    for (auto func : comparators_) {
       if (func(mon1, mon2) != func(mon2, mon1)) {
         return func(mon1, mon2);
       }
@@ -53,9 +47,7 @@ class MonomialOrder {
   }
 
  private:
-  std::vector<std::function<bool(const Monomial<T, TNumberOfVariables>&,
-                                 const Monomial<T, TNumberOfVariables>&)>>
-      orders;
+  compare_container_type comparators_;
 };
 
 template <typename T, number_of_variables_type TNumberOfVariables>
