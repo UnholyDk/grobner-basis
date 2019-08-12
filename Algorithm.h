@@ -10,25 +10,26 @@ class Algorithm {
       Polynomial<T, TNumberOfVariables> g,
       PolynomialSet<T, TNumberOfVariables> syst_f) const {
     g.sort_pol(ord_);
-    for (auto& pol : syst_f) {
+    for (auto &pol : syst_f) {
       pol.sort_pol(ord_);
     }
+    return reduction_sorted(g, syst_f);
+  }
 
+  Polynomial<T, TNumberOfVariables> reduction_sorted(
+      Polynomial<T, TNumberOfVariables>& g,
+      PolynomialSet<T, TNumberOfVariables>& syst_f) const {
     for (size_t i = 0; i < g.amount_of_monomials(); ++i) {
       Monomial<T, TNumberOfVariables> mon_from_g = g[i];
       bool can_red = true;
       while (can_red) {
         can_red = false;
         for (const auto& pol_from_s : syst_f) {
-          //
           Monomial<T, TNumberOfVariables> mon_L = L(pol_from_s);
-          //
           if (mon_from_g.is_div(mon_L)) {
-            //
             Monomial<T, TNumberOfVariables> tmp_c = mon_from_g / mon_L;
             Polynomial<T, TNumberOfVariables> tmp_p =
-                pol_from_s * tmp_c;  // shit is here
-            //
+                pol_from_s * tmp_c;
             g -= tmp_p;
             g.sort_pol(ord_);
             if (i >= g.amount_of_monomials()) {
