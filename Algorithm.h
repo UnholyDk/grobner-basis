@@ -17,25 +17,24 @@ class Algorithm {
   }
 
   Polynomial<T, TNumberOfVariables> reduction_sorted(
-      Polynomial<T, TNumberOfVariables>& g,
-      PolynomialSet<T, TNumberOfVariables>& syst_f) const {
-    for (size_t i = 0; i < g.amount_of_monomials(); ++i) {
-      Monomial<T, TNumberOfVariables> mon_from_g = g[i];
+      const Polynomial<T, TNumberOfVariables>& g,
+      const PolynomialSet<T, TNumberOfVariables>& syst_f) const {
+    Polynomial<T, TNumberOfVariables> ans = g;
+    ans.sort_pol(ord_);
+    for (size_t i = 0; i < ans.amount_of_monomials(); ++i) {
+      Monomial<T, TNumberOfVariables> mon_from_ans = ans[i];
       bool can_red = true;
       while (can_red) {
         can_red = false;
         for (const auto& pol_from_s : syst_f) {
-          Monomial<T, TNumberOfVariables> mon_L = L(pol_from_s);
-          if (mon_from_g.is_div(mon_L)) {
-            Monomial<T, TNumberOfVariables> tmp_c = mon_from_g / mon_L;
-            Polynomial<T, TNumberOfVariables> tmp_p =
-                pol_from_s * tmp_c;
-            g -= tmp_p;
-            g.sort_pol(ord_);
-            if (i >= g.amount_of_monomials()) {
+          if (mon_from_ans.is_div(L(pol_from_s))) {
+            Monomial<T, TNumberOfVariables> tmp_c = mon_from_ans / L(pol_from_s);
+            ans -= pol_from_s * tmp_c;
+            ans.sort_pol(ord_);
+            if (i >= ans.amount_of_monomials()) {
               can_red = false;
             } else {
-              mon_from_g = g[i];
+              mon_from_ans = ans[i];
               can_red = true;
             }
             break;
@@ -43,7 +42,7 @@ class Algorithm {
         }
       }
     }
-    return g.sort_pol(ord_);
+    return ans.sort_pol(ord_);
   }
 
   PolynomialSet<T, TNumberOfVariables> Buchberger(
