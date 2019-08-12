@@ -57,7 +57,7 @@ namespace grobner {
                       reduction(S(ans_syst[i], ans_syst[j]), ans_syst);
               if (red_s_pol.amount_of_monomials() !=
                   0) {  // need fixed this to check empty polynomial
-                ans_syst += red_s_pol;
+                ans_syst.add_pol(red_s_pol);
               }
             }
           }
