@@ -8,10 +8,7 @@ namespace grobner {
 
         MonomialOrder<T, TNumberOfVariables>& get_mon_order() { return mon_order_; }
 
-        PolynomialOrder(const std::vector<
-                std::function<bool(const Monomial<T, TNumberOfVariables>&,
-                                   const Monomial<T, TNumberOfVariables>&)>>&
-        tmp_mon_ord) {
+        PolynomialOrder(const MonomialOrder<T, TNumberOfVariables>& tmp_mon_ord) {
           mon_order_ = tmp_mon_ord;
         }
 
