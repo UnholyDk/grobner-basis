@@ -11,7 +11,9 @@ int main() {
   grobner::Polynomial<type, numberVariables> f1, f2, f3, f4, g, ans;
 
   std::array<deg_value_type, numberVariables> d;
+  d.fill(0);
   std::array<deg_value_type, numberVariables> e;
+  e.fill(0);
 
   d[0] = 2;
   d[1] = 1;
