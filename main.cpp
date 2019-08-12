@@ -1,9 +1,9 @@
 #include <iostream>
 #include "Algorithm.h"
-#include <boost/rational.hpp>
+//#include <boost/rational.hpp>
 
 
-using type = boost::rational<int>;
+using type = double;
 
 
 int main() {
@@ -15,6 +15,8 @@ int main() {
   std::array<deg_value_type, numberVariables> e;
   e.fill(0);
 
+
+
   d[0] = 2;
   d[1] = 1;
   d[2] = 0;
@@ -22,9 +24,10 @@ int main() {
   e[1] = 1;
   e[2] = 0;
   grobner::Monomial<type, numberVariables> f11(1, d), f12(-1, e);
+
   f1 += f11;
   f1 += f12;
-  syst += f1;
+  syst.add_pol(f1);
 
   d[0] = 0;
   d[1] = 2;
@@ -35,7 +38,7 @@ int main() {
   grobner::Monomial<type, numberVariables> f21(1, d), f22(2, e);
   f2 += f21;
   f2 += f22;
-  syst += f2;
+  syst.add_pol(f2);
 
   d[0] = 1;
   d[1] = 1;
@@ -46,7 +49,7 @@ int main() {
   grobner::Monomial<type, numberVariables> f31(-1, d), f32(-2, e);
   f3 += f31;
   f3 += f32;
-  syst += f3;
+  syst.add_pol(f3);
 
   d[0] = 2;
   d[1] = 0;
@@ -57,7 +60,7 @@ int main() {
   grobner::Monomial<type, numberVariables> f41(2, d), f42(1, e);
   f4 += f41;
   f4 += f42;
-  syst += f4;
+  syst.add_pol(f4);
 
   d[0] = 2;
   d[1] = 0;
