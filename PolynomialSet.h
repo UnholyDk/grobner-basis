@@ -26,7 +26,30 @@ class PolynomialSet {
 
   Polynomial<T, TNumberOfVariables>& operator[](size_t i) { return pols_[i]; }
 
-  void operator+=(const Polynomial<T, TNumberOfVariables>& pol) {
+  bool equal_of_monoms_sorted(const Polynomial<T, TNumberOfVariables>& pol1,
+                              const Polynomial<T, TNumberOfVariables>& pol2) {
+    if (pol1.size() != pol2.size()) {
+      return false;
+    }
+    auto it1 = pol1.begin();
+    auto it2 = pol2.begin();
+    while (it1 != pol1.end()) {
+      if ((*it1).equal_of_variables(*it2)) {
+        return false;
+      }
+      ++it1;
+      ++it2;
+    }
+    return true;
+  }
+
+  void add_pol(const Polynomial<T, TNumberOfVariables>& pol) {
+    for (auto& my_pol : pols_) {
+      if (equal_of_monoms_sorted(my_pol, pol)) {
+        my_pol += pol;
+        return;
+      }
+    }
     pols_.push_back(pol);
   }
 
