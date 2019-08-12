@@ -1,6 +1,6 @@
 #include <iostream>
 #include "Algorithm.h"
-//#include <boost/rational.hpp>
+#include <boost/rational.hpp>
 
 
 using type = double;
