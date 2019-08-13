@@ -117,13 +117,13 @@ namespace grobner {
     private:
         container_type monomials_;
         void dell_all_zero() {
-            for (size_t i = 0; i < amount_of_monomials();) {
-                if (monomials_[i].get_coefficient() == 0 && monomials_.size() > 1) {
-                    monomials_.erase(monomials_.begin() + i);
-                } else {
-                    ++i;
-                }
+          for (size_t i = 0; i < amount_of_monomials();) {
+            if (monomials_[i].get_coefficient() == 0 && monomials_.size() > 1) {
+              monomials_.erase(monomials_.begin() + i);
+            } else {
+              ++i;
             }
+          }
         }
     };
 }  // namespace grobner

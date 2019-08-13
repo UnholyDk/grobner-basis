@@ -1,3 +1,4 @@
+#pragma once
 #include "PolynomialVector.h"
 #include <utility>
 namespace grobner {
