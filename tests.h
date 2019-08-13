@@ -39,8 +39,6 @@ int test_1() {
   g += g1; g += g2;
   grobner::MonomialOrder<type, numberVariables> lex = grobner::MonomialOrder<type, numberVariables>::LexDegOrder();
   grobner::Algorithm<type, numberVariables> alg(lex);
-  alg.reduce(syst, &g);
-
-  std::cout << g;
+  std::cout << alg.reduction(g, syst); // ans = -0.5ac^4
   return 0;
 }
