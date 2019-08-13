@@ -57,18 +57,35 @@ class MonomialOrder {
     return !is_less(mon2, mon1);
   }
 
+  static MonomialOrder LexDegOrder() {
+    MonomialOrder tmp_mon_ord;
+    tmp_mon_ord += compare_type([](const Monomial<T, TNumberOfVariables>& mon1,
+                                   const Monomial<T, TNumberOfVariables>& mon2) {
+                                  for (size_t i = 0; i < 26; ++i) {
+                                    if (mon1[i] != mon2[i]) {
+                                      return mon1[i] < mon2[i];
+                                    }
+                                  }
+                                  return false;
+                                  });
+    return tmp_mon_ord;
+  }
+
+  static MonomialOrder RevLexDegOrder() {
+    MonomialOrder tmp_mon_ord;
+    tmp_mon_ord += compare_type([](const Monomial<T, TNumberOfVariables>& mon1,
+                                   const Monomial<T, TNumberOfVariables>& mon2) {
+                                  for (int i = 25; i >= 0; --i) {
+                                    if (mon1[i] != mon2[i]) {
+                                      return mon1[i] < mon2[i];
+                                    }
+                                  }
+                                  return false;
+                                });
+    return tmp_mon_ord;
+  }
+
  private:
   compare_container_type comparators_;
 };
-
-template <typename T, number_of_variables_type TNumberOfVariables>
-bool lexicograph(const Monomial<T, TNumberOfVariables>& mon1,
-                 const Monomial<T, TNumberOfVariables>& mon2) {
-  for (size_t i = 0; i < 26; ++i) {
-    if (mon1[i] != mon2[i]) {
-      return mon1[i] < mon2[i];
-    }
-  }
-  return false;
-}
 }  // namespace grobner
