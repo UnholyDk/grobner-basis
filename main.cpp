@@ -14,7 +14,7 @@ int main() {
   d.fill(0);
   std::array<deg_value_type, numberVariables> e;
   e.fill(0);
-
+  //testcommit
 
 
   d[0] = 2;
