@@ -5,7 +5,7 @@
 using type = double;
 
 
-bool test_1() {
+int test_1() {
   grobner::PolynomialVector<type, numberVariables> syst;
   grobner::Polynomial<type, numberVariables> f1, f2, f3, f4, g, ans;
   std::array<deg_value_type, numberVariables> d;
@@ -42,4 +42,5 @@ bool test_1() {
   alg.reduce(syst, &g);
 
   std::cout << g;
+  return 0;
 }
