@@ -7,42 +7,44 @@ namespace grobner {
     public:
         Algorithm(const MonomialOrder<T, TNumberOfVariables>& order) : ord_(std::move(order)) {}
 
-      bool reduce(PolynomialVector<T, TNumberOfVariables>& PolySet, Polynomial<T, TNumberOfVariables>* pPoly) {
-        sort_pol(*pPoly);
-        for (auto &pol : PolySet) {
-          sort_pol(pol);
-        }
-        bool flag = false;
-        for (size_t i = 0; i < pPoly->amount_of_monomials(); ++i) {
-          Monomial<T, TNumberOfVariables> mon_from_ans = pPoly->operator[](i);
-          bool can_red = true;
-          while (can_red) {
-            can_red = false;
-            for (const auto& pol_from_s : PolySet) {
-              if (mon_from_ans.is_div(L(pol_from_s))) {
-                flag = true;
-                Monomial<T, TNumberOfVariables> tmp_c = mon_from_ans / L(pol_from_s);
-                *pPoly -= pol_from_s * tmp_c;
-                sort_pol(*pPoly);
-                if (i >= pPoly->amount_of_monomials()) {
-                  can_red = false;
-                } else {
-                  mon_from_ans = pPoly->operator[](i);
-                  can_red = true;
-                }
-                break;
-              }
+        Polynomial<T, TNumberOfVariables> reduction(
+                Polynomial<T, TNumberOfVariables> g,
+                PolynomialVector<T, TNumberOfVariables> syst_f) const {
+            sort_pol(g);
+            for (auto &pol : syst_f) {
+                sort_pol(pol);
             }
-          }
+            return reduction_sorted(g, syst_f);
         }
-        return flag;
-      }
 
-      Polynomial<T, TNumberOfVariables> reduce(const PolynomialVector<T, TNumberOfVariables>& PolySet, const Polynomial<T, TNumberOfVariables>& Poly) {
-        Polynomial<T, TNumberOfVariables> reduction = Poly;
-        reduce(PolySet, &reduction);
-        return std::move(reduction);
-      }
+        Polynomial<T, TNumberOfVariables> reduction_sorted(
+                const Polynomial<T, TNumberOfVariables>& g,
+                const PolynomialVector<T, TNumberOfVariables>& syst_f) const {
+            Polynomial<T, TNumberOfVariables> ans = g;
+            sort_pol(ans);
+            for (size_t i = 0; i < ans.amount_of_monomials(); ++i) {
+                Monomial<T, TNumberOfVariables> mon_from_ans = ans[i];
+                bool can_red = true;
+                while (can_red) {
+                    can_red = false;
+                    for (const auto& pol_from_s : syst_f) {
+                        if (mon_from_ans.is_div(L(pol_from_s))) {
+                            Monomial<T, TNumberOfVariables> tmp_c = mon_from_ans / L(pol_from_s);
+                            ans -= pol_from_s * tmp_c;
+                            sort_pol(ans);
+                            if (i >= ans.amount_of_monomials()) {
+                                can_red = false;
+                            } else {
+                                mon_from_ans = ans[i];
+                                can_red = true;
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+            return sort_pol(ans);
+        }
 
         PolynomialVector<T, TNumberOfVariables> Buchberger(
                 const PolynomialVector<T, TNumberOfVariables>& other_syst) const {
