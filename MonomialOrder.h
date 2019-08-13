@@ -14,8 +14,29 @@ class MonomialOrder {
 
   MonomialOrder(compare_container_type comparators) : comparators_(std::move(comparators)) {}
 
-  void add_order(const compare_type & func) {
-    comparators_.push_back(func);
+  auto begin() {return comparators_.begin();}
+
+  auto end() { return comparators_.end();}
+
+  auto rbegin() {return comparators_.rbegin();}
+
+  auto rend() { return comparators_.rend();}
+  
+  size_t size() {
+    return comparators_.size();
+  }
+
+  MonomialOrder& operator+=(const compare_type& compare) {
+    comparators_.push_back(compare);
+    return *this;
+  }
+
+  MonomialOrder& operator+=(const MonomialOrder& other) {
+    comparators_.reserve(comparators_.size() + other.size());
+    comparators_.insert(comparators_.end(),
+                        other.begin(),
+                        other.end());
+    return *this;
   }
 
   bool is_less(const monomial & mon1, const monomial & mon2) const {
