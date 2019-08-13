@@ -7,7 +7,7 @@ using type = double;
 
 
 int main() {
-  grobner::PolynomialSet<type, numberVariables> syst;
+  grobner::PolynomialVector<type, numberVariables> syst;
   grobner::Polynomial<type, numberVariables> f1, f2, f3, f4, g, ans;
 
   std::array<deg_value_type, numberVariables> d;

@@ -1,4 +1,4 @@
-#include "PolynomialSet.h"
+#include "PolynomialVector.h"
 #include <utility>
 namespace grobner {
     template <typename T, number_of_variables_type TNumberOfVariables>
@@ -6,7 +6,7 @@ namespace grobner {
     public:
         Algorithm(const MonomialOrder<T, TNumberOfVariables>& order) : ord_(std::move(order)) {}
 
-      bool reduce(PolynomialSet<T, TNumberOfVariables>& PolySet, Polynomial<T, TNumberOfVariables>* pPoly) {
+      bool reduce(PolynomialVector<T, TNumberOfVariables>& PolySet, Polynomial<T, TNumberOfVariables>* pPoly) {
         sort_pol(*pPoly);
         for (auto &pol : PolySet) {
           sort_pol(pol);
@@ -37,15 +37,15 @@ namespace grobner {
         return flag;
       }
 
-      Polynomial<T, TNumberOfVariables> reduce(const PolynomialSet<T, TNumberOfVariables>& PolySet, const Polynomial<T, TNumberOfVariables>& Poly) {
+      Polynomial<T, TNumberOfVariables> reduce(const PolynomialVector<T, TNumberOfVariables>& PolySet, const Polynomial<T, TNumberOfVariables>& Poly) {
         Polynomial<T, TNumberOfVariables> reduction = Poly;
         reduce(PolySet, &reduction);
         return std::move(reduction);
       }
 
-        PolynomialSet<T, TNumberOfVariables> Buchberger(
-                const PolynomialSet<T, TNumberOfVariables>& other_syst) const {
-            PolynomialSet<T, TNumberOfVariables> ans_syst = other_syst;
+        PolynomialVector<T, TNumberOfVariables> Buchberger(
+                const PolynomialVector<T, TNumberOfVariables>& other_syst) const {
+            PolynomialVector<T, TNumberOfVariables> ans_syst = other_syst;
             for (size_t i = 0; i < ans_syst.size(); ++i) {
                 sort_pol(ans_syst[i]);
             }
