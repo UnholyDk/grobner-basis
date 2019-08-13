@@ -11,7 +11,6 @@ namespace grobner {
 
         Polynomial(Monomial<T, TNumberOfVariables>& monomial) {
             monomials_.emplace_back(std::move(monomial));
-            dell_all_zero();
         }
 
         auto begin() const { return monomials_.begin(); }
@@ -91,7 +90,6 @@ namespace grobner {
                     *this += mon_from_this * mon_from_other;
                 }
             }
-            dell_all_zero();
             return *this;
         }
 
@@ -116,15 +114,6 @@ namespace grobner {
 
     private:
         container_type monomials_;
-        void dell_all_zero() {
-          for (size_t i = 0; i < amount_of_monomials();) {
-            if (monomials_[i].get_coefficient() == 0 && monomials_.size() > 1) {
-              monomials_.erase(monomials_.begin() + i);
-            } else {
-              ++i;
-            }
-          }
-        }
     };
 }  // namespace grobner
 
