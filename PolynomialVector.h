@@ -44,12 +44,6 @@ class PolynomialVector {
   }
 
   void add_pol(const Polynomial<T, TNumberOfVariables>& pol) {
-    for (auto& my_pol : pols_) {
-      if (equal_of_monoms_sorted(my_pol, pol)) {
-        my_pol += pol;
-        return;
-      }
-    }
     pols_.push_back(pol);
   }
 

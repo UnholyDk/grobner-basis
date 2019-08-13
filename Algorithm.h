@@ -57,7 +57,7 @@ namespace grobner {
                     Polynomial<T, TNumberOfVariables> red_s_pol =
                             reduction(S(ans_syst[i], ans_syst[j]), ans_syst);
                     if (red_s_pol.amount_of_monomials() !=
-                        0) {  // need fixed this to check empty polynomial
+                        0) {
                         ans_syst.add_pol(red_s_pol);
                     }
                 }
@@ -108,7 +108,10 @@ namespace grobner {
                                                 tmp_deegs.first);
             Monomial<T, TNumberOfVariables> m_2(L(f_1).get_coefficient(),
                                                 tmp_deegs.second);
-            return sort_pol(f_1 * m_1 - f_2 * m_2);
+            Polynomial<T, TNumberOfVariables> ans;
+            ans += f_1 * m_1;
+            ans -= f_2 * m_2;
+            return sort_pol(ans);
         }
 
         MonomialOrder<T, TNumberOfVariables> ord_;
