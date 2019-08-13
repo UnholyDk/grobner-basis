@@ -21,7 +21,7 @@ class MonomialOrder {
   auto rbegin() {return comparators_.rbegin();}
 
   auto rend() { return comparators_.rend();}
-  
+
   size_t size() {
     return comparators_.size();
   }
@@ -37,6 +37,11 @@ class MonomialOrder {
                         other.begin(),
                         other.end());
     return *this;
+  }
+
+  MonomialOrder operator+(const MonomialOrder& other) const {
+    compare_container_type tmp_comparators = comparators_;
+    return std::move(tmp_comparators += other);
   }
 
   bool is_less(const monomial & mon1, const monomial & mon2) const {
