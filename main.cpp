@@ -1,6 +1,6 @@
 #include <iostream>
 #include "Algorithm.h"
-#include <boost/rational.hpp>
+//#include <boost/rational.hpp>
 
 
 using type = double;
@@ -14,7 +14,7 @@ int main() {
   d.fill(0);
   std::array<deg_value_type, numberVariables> e;
   e.fill(0);
-  //testcommit
+
 
 
   d[0] = 2;
@@ -73,7 +73,7 @@ int main() {
   g += g2;
 
   grobner::MonomialOrder<type, numberVariables> lex;
-  lex.add_order(grobner::lexicograph<type, numberVariables>);
+  lex += grobner::lexicograph<type, numberVariables>;
 
   grobner::Algorithm<type, numberVariables> alg(lex);
   std::cout << alg.reduction(g, syst);
