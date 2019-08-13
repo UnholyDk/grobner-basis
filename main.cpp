@@ -75,6 +75,7 @@ int main() {
   grobner::MonomialOrder<type, numberVariables> lex = grobner::MonomialOrder<type, numberVariables>::LexDegOrder();
 
   grobner::Algorithm<type, numberVariables> alg(lex);
-  std::cout << alg.reduction(g, syst);
+  alg.reduce(syst, &g);
+  std::cout << g;
   return 0;
 }
