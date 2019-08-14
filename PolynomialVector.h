@@ -1,7 +1,7 @@
 #include "PolynomialOrder.h"
 
 namespace grobner {
-template <typename T, number_of_variables_type TNumberOfVariables>
+template<typename T, number_of_variables_type TNumberOfVariables>
 class PolynomialVector {
  public:
   PolynomialVector() {}
@@ -24,16 +24,16 @@ class PolynomialVector {
     return pols_[i];
   }
 
-  Polynomial<T, TNumberOfVariables>& operator[](size_t i) { return pols_[i]; }
+  Polynomial<T, TNumberOfVariables> &operator[](size_t i) { return pols_[i]; }
 
-  bool equal_of_monoms_sorted(const Polynomial<T, TNumberOfVariables>& pol1,
-                              const Polynomial<T, TNumberOfVariables>& pol2) {
-    if (pol1.size() != pol2.size()) {
+  bool equal_of_monoms_sorted(const Polynomial<T, TNumberOfVariables> &pol1,
+                              const Polynomial<T, TNumberOfVariables> &pol2) {
+    if (pol1.size()!=pol2.size()) {
       return false;
     }
     auto it1 = pol1.begin();
     auto it2 = pol2.begin();
-    while (it1 != pol1.end()) {
+    while (it1!=pol1.end()) {
       if ((*it1).equal_of_variables(*it2)) {
         return false;
       }
@@ -43,7 +43,7 @@ class PolynomialVector {
     return true;
   }
 
-  void add_pol(const Polynomial<T, TNumberOfVariables>& pol) {
+  void add_pol(const Polynomial<T, TNumberOfVariables> &pol) {
     pols_.push_back(pol);
   }
 

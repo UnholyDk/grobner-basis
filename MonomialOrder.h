@@ -2,36 +2,37 @@
 #include "Monomial.h"
 
 namespace grobner {
-template <typename T, number_of_variables_type TNumberOfVariables>
+template<typename T, number_of_variables_type TNumberOfVariables>
 class MonomialOrder {
   using monomial = Monomial<T, TNumberOfVariables>;
-  using compare_signature_type = bool(const monomial&, const monomial&);
+  using compare_signature_type = bool(const monomial &, const monomial &);
   using compare_type = std::function<compare_signature_type>;
   using compare_container_type = std::vector<compare_type>;
 
  public:
   MonomialOrder() {}
 
-  MonomialOrder(compare_container_type comparators) : comparators_(std::move(comparators)) {}
+  MonomialOrder(compare_container_type comparators)
+      : comparators_(std::move(comparators)) {}
 
-  auto begin() {return comparators_.begin();}
+  auto begin() { return comparators_.begin(); }
 
-  auto end() { return comparators_.end();}
+  auto end() { return comparators_.end(); }
 
-  auto rbegin() {return comparators_.rbegin();}
+  auto rbegin() { return comparators_.rbegin(); }
 
-  auto rend() { return comparators_.rend();}
+  auto rend() { return comparators_.rend(); }
 
   size_t size() {
     return comparators_.size();
   }
 
-  MonomialOrder& operator+=(const compare_type& compare) {
+  MonomialOrder &operator+=(const compare_type &compare) {
     comparators_.push_back(compare);
     return *this;
   }
 
-  MonomialOrder& operator+=(const MonomialOrder& other) {
+  MonomialOrder &operator+=(const MonomialOrder &other) {
     comparators_.reserve(comparators_.size() + other.size());
     comparators_.insert(comparators_.end(),
                         other.begin(),
@@ -39,49 +40,49 @@ class MonomialOrder {
     return *this;
   }
 
-  MonomialOrder operator+(const MonomialOrder& other) const {
+  MonomialOrder operator+(const MonomialOrder &other) const {
     compare_container_type tmp_comparators = comparators_;
     return std::move(tmp_comparators += other);
   }
 
-  bool is_less(const monomial & mon1, const monomial & mon2) const {
+  bool is_less(const monomial &mon1, const monomial &mon2) const {
     for (auto func : comparators_) {
-      if (func(mon1, mon2) != func(mon2, mon1)) {
+      if (func(mon1, mon2)!=func(mon2, mon1)) {
         return func(mon1, mon2);
       }
     }
     return false;
   }
 
-  bool is_less_eq(const monomial& mon1, const monomial & mon2) const {
+  bool is_less_eq(const monomial &mon1, const monomial &mon2) const {
     return !is_less(mon2, mon1);
   }
 
   static MonomialOrder LexDegOrder() {
     MonomialOrder tmp_mon_ord;
-    tmp_mon_ord += compare_type([](const Monomial<T, TNumberOfVariables>& mon1,
-                                   const Monomial<T, TNumberOfVariables>& mon2) {
-                                  for (size_t i = 0; i < 26; ++i) {
-                                    if (mon1[i] != mon2[i]) {
-                                      return mon1[i] < mon2[i];
-                                    }
-                                  }
-                                  return false;
-                                  });
+    tmp_mon_ord += compare_type([](const Monomial<T, TNumberOfVariables> &mon1,
+                                   const Monomial<T, TNumberOfVariables> &mon2) {
+      for (size_t i = 0; i < 26; ++i) {
+        if (mon1[i]!=mon2[i]) {
+          return mon1[i] < mon2[i];
+        }
+      }
+      return false;
+    });
     return tmp_mon_ord;
   }
 
   static MonomialOrder RevLexDegOrder() {
     MonomialOrder tmp_mon_ord;
-    tmp_mon_ord += compare_type([](const Monomial<T, TNumberOfVariables>& mon1,
-                                   const Monomial<T, TNumberOfVariables>& mon2) {
-                                  for (int i = 25; i >= 0; --i) {
-                                    if (mon1[i] != mon2[i]) {
-                                      return mon1[i] < mon2[i];
-                                    }
-                                  }
-                                  return false;
-                                });
+    tmp_mon_ord += compare_type([](const Monomial<T, TNumberOfVariables> &mon1,
+                                   const Monomial<T, TNumberOfVariables> &mon2) {
+      for (int i = 25; i >= 0; --i) {
+        if (mon1[i]!=mon2[i]) {
+          return mon1[i] < mon2[i];
+        }
+      }
+      return false;
+    });
     return tmp_mon_ord;
   }
 
