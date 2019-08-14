@@ -1,133 +1,133 @@
-#pragma once
 #include "Algorithm.h"
 #include <iostream>
+#include <boost/rational.hpp>
+#include "ResidueModulo.h"
 
-using type = double;
+using type_rational = boost::rational<int>;
+using type_residue = ResidueModulo;
 
 
 int test_1() {
-  grobner::PolynomialVector<type, numberVariables> syst;
-  grobner::Polynomial<type, numberVariables> f1, f2, f3, f4, g, ans;
+  grobner::PolynomialVector<type_rational, numberVariables> syst;
+  grobner::Polynomial<type_rational, numberVariables> f1, f2, f3, f4, g, ans;
   std::array<deg_value_type, numberVariables> d;
   d.fill(0);
   std::array<deg_value_type, numberVariables> e;
   e.fill(0);
   d[0] = 2; d[1] = 1; d[2] = 0;
   e[0] = 1; e[1] = 1; e[2] = 0;
-  grobner::Monomial<type, numberVariables> f11(1, d), f12(-1, e);
+  grobner::Monomial<type_rational, numberVariables> f11(1, d), f12(-1, e);
   f1 += f11; f1 += f12;
   syst.add_pol(f1);
   d[0] = 0; d[1] = 2; d[2] = 0;
   e[0] = 0; e[1] = 1; e[2] = 1;
-  grobner::Monomial<type, numberVariables> f21(1, d), f22(2, e);
+  grobner::Monomial<type_rational, numberVariables> f21(1, d), f22(2, e);
   f2 += f21;
   f2 += f22;
   syst.add_pol(f2);
   d[0] = 1; d[1] = 1; d[2] = 1;
   e[0] = 1; e[1] = 0; e[2] = 2;
-  grobner::Monomial<type, numberVariables> f31(-1, d), f32(-2, e);
+  grobner::Monomial<type_rational, numberVariables> f31(-1, d), f32(-2, e);
   f3 += f31; f3 += f32;
   syst.add_pol(f3);
   d[0] = 2; d[1] = 0; d[2] = 2;
   e[0] = 1; e[1] = 0; e[2] = 2;
-  grobner::Monomial<type, numberVariables> f41(2, d), f42(1, e);
+  grobner::Monomial<type_rational, numberVariables> f41(2, d), f42(1, e);
   f4 += f41; f4 += f42;
   syst.add_pol(f4);
   d[0] = 2; d[1] = 0; d[2] = 4;
   e[0] = 1; e[1] = 1; e[2] = 3;
-  grobner::Monomial<type, numberVariables> g1(5, d), g2(-1, e);
+  grobner::Monomial<type_rational, numberVariables> g1(5, d), g2(-1, e);
   g += g1; g += g2;
-  grobner::MonomialOrder<type, numberVariables> lex = grobner::MonomialOrder<type, numberVariables>::LexDegOrder();
-  grobner::Algorithm<type, numberVariables> alg(lex);
+  grobner::MonomialOrder<type_rational, numberVariables> lex = grobner::MonomialOrder<type_rational, numberVariables>::LexDegOrder();
+  grobner::Algorithm<type_rational, numberVariables> alg(lex);
   std::cout << alg.reduction(g, syst) << "\n"; // ans = -0.5ac^4
   return 0;
 }
 
 int test_2() {
-  grobner::PolynomialVector<type, numberVariables> syst;
-  grobner::Polynomial<type, numberVariables> f1, f2, g;
+  grobner::PolynomialVector<type_rational, numberVariables> syst;
+  grobner::Polynomial<type_rational, numberVariables> f1, f2, g;
   std::array<deg_value_type, numberVariables> d;
   d.fill(0);
   std::array<deg_value_type, numberVariables> e;
   e.fill(0);
   d[0] = 2; d[1] = 1; d[2] = 0;
   e[0] = 1; e[1] = 0; e[2] = 1;
-  grobner::Monomial<type, numberVariables> f11(1, d), f12(-1, e);
+  grobner::Monomial<type_rational, numberVariables> f11(1, d), f12(-1, e);
   f1 += f11; f1 += f12;
   syst.add_pol(f1);
   d[0] = 0; d[1] = 2; d[2] = 0;
   e[0] = 0; e[1] = 1; e[2] = 1;
-  grobner::Monomial<type, numberVariables> f21(1, d), f22(2, e);
+  grobner::Monomial<type_rational, numberVariables> f21(1, d), f22(2, e);
   f2 += f21;
   f2 += f22;
   syst.add_pol(f2);
   d[0] = 2; d[1] = 0; d[2] = 4;
   e[0] = 1; e[1] = 1; e[2] = 3;
-  grobner::Monomial<type, numberVariables> g1(5, d), g2(-1, e);
+  grobner::Monomial<type_rational, numberVariables> g1(5, d), g2(-1, e);
   g += g1; g += g2;
-  grobner::MonomialOrder<type, numberVariables> lex = grobner::MonomialOrder<type, numberVariables>::LexDegOrder();
-  grobner::Algorithm<type, numberVariables> alg(lex);
+  grobner::MonomialOrder<type_rational, numberVariables> lex = grobner::MonomialOrder<type_rational, numberVariables>::LexDegOrder();
+  grobner::Algorithm<type_rational, numberVariables> alg(lex);
   syst = alg.Buchberger(syst);
   std::cout << alg.reduction(g, syst) << "\n"; // ans = -0.5ac^4
   return 0;
 }
 
 int test_3() {
-  grobner::PolynomialVector<type, numberVariables> syst;
-  grobner::Polynomial<type, numberVariables> f1, f2, f3;
+  grobner::PolynomialVector<type_rational, numberVariables> syst;
+  grobner::Polynomial<type_rational, numberVariables> f1, f2, f3;
   std::array<deg_value_type, numberVariables> d;
   d.fill(0);
   std::array<deg_value_type, numberVariables> e;
   e.fill(0);
   d[0] = 1; d[1] = 1; d[2] = 0;
   e[0] = 0; e[1] = 1; e[2] = 1;
-  grobner::Monomial<type, numberVariables> f11(1, d), f12(2, e);
+  grobner::Monomial<type_rational, numberVariables> f11(1, d), f12(2, e);
   f1 += f11; f1 += f12;
   syst.add_pol(f1);
   d[0] = 1; d[1] = 0; d[2] = 0;
   e[0] = 0; e[1] = 1; e[2] = 0;
-  grobner::Monomial<type, numberVariables> f21(1, d), f22(-1, e);
+  grobner::Monomial<type_rational, numberVariables> f21(1, d), f22(-1, e);
   f2 += f21;
   f2 += f22;
   syst.add_pol(f2);
   d[0] = 0; d[1] = 1; d[2] = 1;
   e[0] = 0; e[1] = 1; e[2] = 0;
-  grobner::Monomial<type, numberVariables> f31(1, d), f32(-1, e);
+  grobner::Monomial<type_rational, numberVariables> f31(1, d), f32(-1, e);
   f3 += f31; f3 += f32;
   syst.add_pol(f3);
-  grobner::MonomialOrder<type, numberVariables> lex = grobner::MonomialOrder<type, numberVariables>::LexDegOrder();
-  grobner::Algorithm<type, numberVariables> alg(lex);
+  grobner::MonomialOrder<type_rational, numberVariables> lex = grobner::MonomialOrder<type_rational, numberVariables>::LexDegOrder();
+  grobner::Algorithm<type_rational, numberVariables> alg(lex);
   syst = alg.Buchberger(syst);
   std::cout << syst[3] << "\n"; // ans = +(-2b)+(-1b^2)
   return 0;
 }
 
 int test_4() {
-  grobner::PolynomialVector<type, numberVariables> syst;
-  grobner::Polynomial<type, numberVariables> f1, f2;
+  grobner::PolynomialVector<type_rational, numberVariables> syst;
+  grobner::Polynomial<type_rational, numberVariables> f1, f2;
   std::array<deg_value_type, numberVariables> d;
   d.fill(0);
   std::array<deg_value_type, numberVariables> e;
   e.fill(0);
   d[0] = 2; d[1] = 1; d[2] = 0;
   e[0] = 1; e[1] = 0; e[2] = 1;
-  grobner::Monomial<type, numberVariables> f11(1, d), f12(2, e);
+  grobner::Monomial<type_rational, numberVariables> f11(1, d), f12(2, e);
   f1 += f11; f1 += f12;
   d[0] = 0; d[1] = 0; d[2] = 2;
-  grobner::Monomial<type, numberVariables> f13(1, d);
+  grobner::Monomial<type_rational, numberVariables> f13(1, d);
   f1 += f13;
   syst.add_pol(f1);
   d[0] = 0; d[1] = 1; d[2] = 1;
   e[0] = 0; e[1] = 0; e[2] = 0;
-  grobner::Monomial<type, numberVariables> f21(1, d), f22(-1, e);
+  grobner::Monomial<type_rational, numberVariables> f21(1, d), f22(-1, e);
   f2 += f21;
   f2 += f22;
   syst.add_pol(f2);
-  grobner::MonomialOrder<type, numberVariables> lex = grobner::MonomialOrder<type, numberVariables>::LexDegOrder();
-  grobner::Algorithm<type, numberVariables> alg(lex);
+  grobner::MonomialOrder<type_rational, numberVariables> lex = grobner::MonomialOrder<type_rational, numberVariables>::LexDegOrder();
+  grobner::Algorithm<type_rational, numberVariables> alg(lex);
   syst = alg.Buchberger(syst);
   std::cout <<  syst[2] << "\n"; // ans = +(-1c^3)+(-2ac^2)+(-1a^2)
   return 0;
 }
-
-

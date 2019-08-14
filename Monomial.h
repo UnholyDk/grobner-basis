@@ -129,7 +129,7 @@ template <class TCoefficient, number_of_variables_type TNumberOfVariables>
 std::ostream &operator<<(
     std::ostream &os,
     grobner::Monomial<TCoefficient, TNumberOfVariables> const &m) {
-  os << m.get_coefficient();
+  if (m.get_coefficient() != 1) os << m.get_coefficient();
   if (m.get_coefficient() != 0) grobner::print_variables(os, m);
   return os;
 }
