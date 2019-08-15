@@ -1,6 +1,7 @@
 #include "tests.h"
 
 bool check() {
+  all_tests();
   std::vector<std::string>
       true_ans = {"(-1/2ac^4)", "(-1/2ac^4)", "(-2/1b)+(-b^2)", "(-c^3)+(-2/1ac^2)+(-a^2)", "(5a^2c^4)"};
   std::ifstream output("output.txt");
