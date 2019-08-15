@@ -1,3 +1,4 @@
+#include <cassert>
 using type_number = int;
 using type_modulo = size_t;
 

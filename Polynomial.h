@@ -130,8 +130,12 @@ std::ostream &operator<<(
     std::ostream &os, grobner::Polynomial<T, TNumberOfVariables> const &pol) {
   if (pol.empty())
     os << 0;
-  for (auto &mon : pol) {
-    os << "+(" << mon << ')';
+  auto it = pol.begin();
+  os << '(' << *it << ')';
+  ++it;
+  while (it != pol.end()) {
+    os << "+(" <<*it << ')';
+    ++it;
   }
   return os;
 }
