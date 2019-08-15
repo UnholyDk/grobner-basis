@@ -2,11 +2,14 @@
 #include <iostream>
 #include <boost/rational.hpp>
 #include "ResidueModulo.h"
+#include <cstdio>
 
 using type_rational = boost::rational<int>;
 using type_residue = ResidueModulo;
 
+
 int test_1() {
+  freopen("output.txt", "w", stdout);
   grobner::PolynomialVector<type_rational, numberVariables> syst;
   grobner::Polynomial<type_rational, numberVariables> f1, f2, f3, f4, g, ans;
   std::array<deg_value_type, numberVariables> d;
@@ -70,6 +73,7 @@ int test_1() {
 }
 
 int test_2() {
+  freopen("output.txt", "w", stdout);
   grobner::PolynomialVector<type_rational, numberVariables> syst;
   grobner::Polynomial<type_rational, numberVariables> f1, f2, g;
   std::array<deg_value_type, numberVariables> d;
@@ -114,6 +118,7 @@ int test_2() {
 }
 
 int test_3() {
+  freopen("output.txt", "w", stdout);
   grobner::PolynomialVector<type_rational, numberVariables> syst;
   grobner::Polynomial<type_rational, numberVariables> f1, f2, f3;
   std::array<deg_value_type, numberVariables> d;
@@ -159,6 +164,7 @@ int test_3() {
 }
 
 int test_4() {
+  freopen("output.txt", "w", stdout);
   grobner::PolynomialVector<type_rational, numberVariables> syst;
   grobner::Polynomial<type_rational, numberVariables> f1, f2;
   std::array<deg_value_type, numberVariables> d;
@@ -199,6 +205,7 @@ int test_4() {
 }
 
 int test_5() {
+  freopen("output.txt", "w", stdout);
   ResidueModulo a1(1, 7);
   ResidueModulo a2(-1, 7);
   ResidueModulo a3(5, 7);
