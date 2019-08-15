@@ -3,13 +3,12 @@
 #include <boost/rational.hpp>
 #include "ResidueModulo.h"
 #include <cstdio>
+#include <fstream>
 
-using type_rational = boost::rational<int>;
+using type_rational = boost::rational<int>;;
 using type_residue = ResidueModulo;
 
-
-int test_1() {
-  freopen("output.txt", "w", stdout);
+int test_1(std::ofstream &output) {
   grobner::PolynomialVector<type_rational, numberVariables> syst;
   grobner::Polynomial<type_rational, numberVariables> f1, f2, f3, f4, g, ans;
   std::array<deg_value_type, numberVariables> d;
@@ -68,12 +67,11 @@ int test_1() {
   grobner::MonomialOrder<type_rational, numberVariables>
       lex = grobner::MonomialOrder<type_rational, numberVariables>::LexDegOrder();
   grobner::Algorithm<type_rational, numberVariables> alg(lex);
-  std::cout << alg.reduction(g, syst) << "\n"; // ans = -0.5ac^4
+  output << alg.reduction(g, syst) << "\n"; // ans = -0.5ac^4
   return 0;
 }
 
-int test_2() {
-  freopen("output.txt", "w", stdout);
+int test_2(std::ofstream &output) {
   grobner::PolynomialVector<type_rational, numberVariables> syst;
   grobner::Polynomial<type_rational, numberVariables> f1, f2, g;
   std::array<deg_value_type, numberVariables> d;
@@ -113,12 +111,11 @@ int test_2() {
       lex = grobner::MonomialOrder<type_rational, numberVariables>::LexDegOrder();
   grobner::Algorithm<type_rational, numberVariables> alg(lex);
   syst = alg.Buchberger(syst);
-  std::cout << alg.reduction(g, syst) << "\n"; // ans = -0.5ac^4
+  output << alg.reduction(g, syst) << "\n"; // ans = -0.5ac^4
   return 0;
 }
 
-int test_3() {
-  freopen("output.txt", "w", stdout);
+int test_3(std::ofstream &output) {
   grobner::PolynomialVector<type_rational, numberVariables> syst;
   grobner::Polynomial<type_rational, numberVariables> f1, f2, f3;
   std::array<deg_value_type, numberVariables> d;
@@ -159,12 +156,11 @@ int test_3() {
       lex = grobner::MonomialOrder<type_rational, numberVariables>::LexDegOrder();
   grobner::Algorithm<type_rational, numberVariables> alg(lex);
   syst = alg.Buchberger(syst);
-  std::cout << syst[3] << "\n"; // ans = +(-2b)+(-1b^2)
+  output << syst[3] << "\n"; // ans = +(-2b)+(-1b^2)
   return 0;
 }
 
-int test_4() {
-  freopen("output.txt", "w", stdout);
+int test_4(std::ofstream &output) {
   grobner::PolynomialVector<type_rational, numberVariables> syst;
   grobner::Polynomial<type_rational, numberVariables> f1, f2;
   std::array<deg_value_type, numberVariables> d;
@@ -200,12 +196,12 @@ int test_4() {
       lex = grobner::MonomialOrder<type_rational, numberVariables>::LexDegOrder();
   grobner::Algorithm<type_rational, numberVariables> alg(lex);
   syst = alg.Buchberger(syst);
-  std::cout << syst[2] << "\n"; // ans = +(-1c^3)+(-2ac^2)+(-1a^2)
+  output << syst[2] << "\n"; // ans = +(-1c^3)+(-2ac^2)+(-1a^2)
   return 0;
 }
 
-int test_5() {
-  freopen("output.txt", "w", stdout);
+int test_5(std::ofstream &output) {
+  //freopen("output.txt", "w", stdout);
   ResidueModulo a1(1, 7);
   ResidueModulo a2(-1, 7);
   ResidueModulo a3(5, 7);
@@ -271,6 +267,17 @@ int test_5() {
   grobner::MonomialOrder<type_residue, numberVariables>
       lex = grobner::MonomialOrder<type_residue, numberVariables>::LexDegOrder();
   grobner::Algorithm<type_residue, numberVariables> alg(lex);
-  std::cout << alg.reduction(g, syst) << "\n"; // ans = 5a^2c^4
+  output << alg.reduction(g, syst) << "\n"; // ans = 5a^2c^4
+  return 0;
+}
+
+int all_tests() {
+  std::ofstream output("output.txt");
+  test_1(output);
+  test_2(output);
+  test_3(output);
+  test_4(output);
+  test_5(output);
+  output.close();
   return 0;
 }
