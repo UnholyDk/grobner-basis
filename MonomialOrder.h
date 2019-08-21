@@ -57,7 +57,7 @@ class MonomialOrder {
     return !is_less(mon2, mon1);
   }
 
-  static MonomialOrder LexDegOrder() {
+  static MonomialOrder Lex() {
     MonomialOrder tmp_mon_ord;
     tmp_mon_ord += compare_type([](const Monomial<T, TNumberOfVariables> &mon1,
                                    const Monomial<T, TNumberOfVariables> &mon2) {

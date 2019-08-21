@@ -5,7 +5,7 @@
 #include <cstdio>
 #include <fstream>
 
-using type_rational = boost::rational<int>;;
+using type_rational = boost::rational<int>;
 using type_residue = ResidueModulo;
 
 int test_1(std::ofstream &output) {
@@ -65,7 +65,7 @@ int test_1(std::ofstream &output) {
   g += g1;
   g += g2;
   grobner::MonomialOrder<type_rational, numberVariables>
-      lex = grobner::MonomialOrder<type_rational, numberVariables>::LexDegOrder();
+      lex = grobner::MonomialOrder<type_rational, numberVariables>::Lex();
   grobner::Algorithm<type_rational, numberVariables> alg(lex);
   output << alg.reduction(g, syst) << "\n"; // ans = -0.5ac^4
   return 0;
@@ -108,7 +108,7 @@ int test_2(std::ofstream &output) {
   g += g1;
   g += g2;
   grobner::MonomialOrder<type_rational, numberVariables>
-      lex = grobner::MonomialOrder<type_rational, numberVariables>::LexDegOrder();
+      lex = grobner::MonomialOrder<type_rational, numberVariables>::Lex();
   grobner::Algorithm<type_rational, numberVariables> alg(lex);
   syst = alg.Buchberger(syst);
   output << alg.reduction(g, syst) << "\n"; // ans = -0.5ac^4
@@ -153,7 +153,7 @@ int test_3(std::ofstream &output) {
   f3 += f32;
   syst.add_pol(f3);
   grobner::MonomialOrder<type_rational, numberVariables>
-      lex = grobner::MonomialOrder<type_rational, numberVariables>::LexDegOrder();
+      lex = grobner::MonomialOrder<type_rational, numberVariables>::Lex();
   grobner::Algorithm<type_rational, numberVariables> alg(lex);
   syst = alg.Buchberger(syst);
   output << syst[3] << "\n"; // ans = +(-2b)+(-1b^2)
@@ -193,7 +193,7 @@ int test_4(std::ofstream &output) {
   f2 += f22;
   syst.add_pol(f2);
   grobner::MonomialOrder<type_rational, numberVariables>
-      lex = grobner::MonomialOrder<type_rational, numberVariables>::LexDegOrder();
+      lex = grobner::MonomialOrder<type_rational, numberVariables>::Lex();
   grobner::Algorithm<type_rational, numberVariables> alg(lex);
   syst = alg.Buchberger(syst);
   output << syst[2] << "\n"; // ans = +(-1c^3)+(-2ac^2)+(-1a^2)
@@ -265,7 +265,7 @@ int test_5(std::ofstream &output) {
   g += g1;
   g += g2;
   grobner::MonomialOrder<type_residue, numberVariables>
-      lex = grobner::MonomialOrder<type_residue, numberVariables>::LexDegOrder();
+      lex = grobner::MonomialOrder<type_residue, numberVariables>::Lex();
   grobner::Algorithm<type_residue, numberVariables> alg(lex);
   output << alg.reduction(g, syst) << "\n"; // ans = 5a^2c^4
   return 0;
