@@ -42,13 +42,15 @@ class Monomial {
     return tmp;
   }
 
-  int operator[](size_t i) const {
-    if (0 <= i && i < TNumberOfVariables)
-      return degrees_[i];
-    return 0;
+  deg_value_type operator[](index_type index) const {
+    assert(index < degrees_.size());
+    return degrees_[index];
   }
 
-  int &operator[](size_t i) { return degrees_[i]; }
+  deg_value_type& operator[](index_type index) {
+    assert(index < degrees_.size());
+    return degrees_[index];
+  }
 
   bool are_variable_parts_same(const Monomial &other) const {
     return degrees_ == other.degrees_;
