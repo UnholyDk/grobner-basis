@@ -33,7 +33,7 @@ class Polynomial {
         if (monomials_[i].get_coefficient()==-monomial.get_coefficient()) {
           monomials_.erase(monomials_.begin() + i);
         } else {
-          monomials_[i].merge_monomial(monomial);
+          monomials_[i].get_coefficient() += monomial.get_coefficient();
         }
         return *this;
       }

@@ -29,6 +29,8 @@ class Monomial {
     }
   };
 
+  TCoefficient& get_coefficient() { return coefficient_; }
+
   const TCoefficient& get_coefficient() const { return coefficient_; }
 
   Monomial operator-() const {
@@ -56,11 +58,6 @@ class Monomial {
       }
     }
     return true;
-  }
-
-  Monomial &merge_monomial(const Monomial &other) {
-    coefficient_ += other.coefficient_;
-    return *this;
   }
 
   Monomial &operator*=(const TCoefficient &x) {
