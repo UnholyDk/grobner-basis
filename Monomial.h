@@ -111,37 +111,36 @@ class Monomial {
 
   bool operator!=(const Monomial &other) const { return !(*this==other); }
 
+  friend std::ostream & operator<<(std::ostream &os, Monomial const &m) {
+    if (m.get_coefficient()!=1 && m.get_coefficient()!=-1)
+      os << m.get_coefficient();
+    if (m.get_coefficient()==-1)
+      os << "-";
+    if (m.get_coefficient()!=0)
+      print_variables(os, m);
+    return os;
+  }
+
  private:
   TCoefficient coefficient_;
   deg_container_type degrees_;
-};
 
-void print_variable(std::ostream &os, size_t i, deg_value_type deg) {
-  os << char('a' + i);
-  if (deg!=1)
-    os << '^' << deg;
-}
-
-template<class TCoefficient, number_of_variables_type TNumberOfVariables>
-void print_variables(std::ostream &os,
-                Monomial<TCoefficient, TNumberOfVariables> const &m) {
-  size_t i = 0;
-  for (auto &deg : m) {
-    if (deg!=0)
-      print_variable(os, i, deg);
-    ++i;
+  static void print_variable(std::ostream &os, number_of_variables_type variable_index, deg_value_type deg) {
+    if (deg == 0)
+      return;
+    os << char('a' + variable_index);
+    if (deg!=1)
+      os << '^' << deg;
   }
-}
+
+   static void print_variables(std::ostream &os, Monomial const &monomial) {
+    number_of_variables_type variable_index = 0;
+    for (auto &deg : monomial) {
+      print_variable(os, variable_index, deg);
+      ++variable_index;
+    }
+  }
+};
 } // namespace grobner
 
-template<class TCoefficient, number_of_variables_type TNumberOfVariables>
-std::ostream & operator<<(std::ostream &os,
-           grobner::Monomial<TCoefficient, TNumberOfVariables> const &m) {
-  if (m.get_coefficient()!=1 && m.get_coefficient()!=-1)
-    os << m.get_coefficient();
-  if (m.get_coefficient()==-1)
-    os << "-";
-  if (m.get_coefficient()!=0)
-    grobner::print_variables(os, m);
-  return os;
-}
+
