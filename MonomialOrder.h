@@ -58,17 +58,15 @@ class MonomialOrder {
   }
 
   static MonomialOrder Lex() {
-    MonomialOrder tmp_mon_ord;
-    tmp_mon_ord += compare_type([](const Monomial<T, TNumberOfVariables> &mon1,
-                                   const Monomial<T, TNumberOfVariables> &mon2) {
+    return std::initializer_list<compare_type>{([](const Monomial<T, TNumberOfVariables> &mon1,
+                                                   const Monomial<T, TNumberOfVariables> &mon2) {
       for (size_t i = 0; i < 26; ++i) {
         if (mon1[i]!=mon2[i]) {
           return mon1[i] < mon2[i];
         }
       }
       return false;
-    });
-    return tmp_mon_ord;
+    })};
   }
 
   static MonomialOrder RevLexDegOrder() {
