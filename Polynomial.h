@@ -2,7 +2,7 @@
 #include "MonomialOrder.h"
 
 namespace grobner {
-template<class T, number_of_variables_type TNumberOfVariables>
+template<class T, number_of_variables_type TNumberOfVariables = detail::gDefaultNumberOfVariables>
 class Polynomial {
   using container_type = std::vector<Monomial<T, TNumberOfVariables>>;
 
@@ -125,7 +125,7 @@ class Polynomial {
 };
 }  // namespace grobner
 
-template<class T, number_of_variables_type TNumberOfVariables>
+template<class T, grobner::number_of_variables_type TNumberOfVariables = detail::gDefaultNumberOfVariables>
 std::ostream &operator<<(
     std::ostream &os, grobner::Polynomial<T, TNumberOfVariables> const &pol) {
   if (pol.empty())

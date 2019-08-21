@@ -2,7 +2,7 @@
 #include "Monomial.h"
 
 namespace grobner {
-template<typename T, number_of_variables_type TNumberOfVariables>
+template<typename T, number_of_variables_type TNumberOfVariables = detail::gDefaultNumberOfVariables>
 class MonomialOrder {
   using monomial = Monomial<T, TNumberOfVariables>;
   using compare_signature_type = bool(const monomial &, const monomial &);

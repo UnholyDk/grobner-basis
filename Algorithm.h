@@ -1,7 +1,7 @@
 #include "PolynomialVector.h"
 #include <utility>
 namespace grobner {
-template<typename T, number_of_variables_type TNumberOfVariables>
+template<typename T, number_of_variables_type TNumberOfVariables = detail::gDefaultNumberOfVariables>
 class Algorithm {
  public:
   Algorithm(const MonomialOrder<T, TNumberOfVariables> &order)
@@ -85,6 +85,8 @@ class Algorithm {
   }
 
  private:
+  using deg_container_type = typename Monomial<T, TNumberOfVariables>::deg_container_type; //maybe fix or not
+
   Monomial<T, TNumberOfVariables>
   L(const Polynomial<T, TNumberOfVariables> &p) const {
     return p[p.amount_of_monomials() - 1];
