@@ -24,12 +24,8 @@ class Monomial {
     degrees_.fill(0);
   };
 
-  Monomial(TCoefficient coefficient, deg_container_type &degrees) : coefficient_(std::move(coefficient)) {
-    degrees_.fill(0);
-    for (size_t i = 0; i < std::min(degrees.size(), size_t(TNumberOfVariables));
-         ++i) {
-      degrees_[i] = degrees[i];
-    }
+  Monomial(TCoefficient coefficient, const deg_container_type &degrees) : coefficient_(std::move(coefficient)) {
+    degrees_ = degrees;
   };
 
   TCoefficient& get_coefficient() { return coefficient_; }
@@ -58,7 +54,7 @@ class Monomial {
     return degrees_ == other.degrees_;
   }
 
-  bool is_div(const Monomial &other) const {
+  bool is_divisible(const Monomial &other) const {
     for (size_t i = 0; i < TNumberOfVariables; ++i) {
       if (degrees_[i] < other[i]) {
         return false;

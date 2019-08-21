@@ -29,7 +29,7 @@ class Algorithm {
       while (can_red) {
         can_red = false;
         for (const auto &pol_from_s : syst_f) {
-          if (mon_from_ans.is_div(L(pol_from_s))) {
+          if (mon_from_ans.is_divisible(L(pol_from_s))) {
             Monomial<T, TNumberOfVariables> tmp_c =
                 mon_from_ans/L(pol_from_s);
             ans -= pol_from_s*tmp_c;

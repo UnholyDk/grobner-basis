@@ -70,18 +70,16 @@ class MonomialOrder {
     })};
   }
 
-  static MonomialOrder RevLexDegOrder() {
-    MonomialOrder tmp_mon_ord;
-    tmp_mon_ord += compare_type([](const Monomial<T, TNumberOfVariables> &mon1,
-                                   const Monomial<T, TNumberOfVariables> &mon2) {
-      for (int i = 25; i >= 0; --i) {
+  static MonomialOrder RevLex() {
+    return std::initializer_list<compare_type>{([](const Monomial<T, TNumberOfVariables> &mon1,
+                                                   const Monomial<T, TNumberOfVariables> &mon2) {
+      for (size_t i = 0; i < TNumberOfVariables; ++i) {
         if (mon1[i]!=mon2[i]) {
-          return mon1[i] < mon2[i];
+          return mon1[i] > mon2[i];
         }
       }
       return false;
-    });
-    return tmp_mon_ord;
+    })};
   }
 
  private:
