@@ -48,7 +48,7 @@ class Monomial {
     return degrees_ == other.degrees_;
   }
 
-  bool is_div(const Monomial &other) const {
+  bool is_divisible(const Monomial &other) const {
     for (size_t i = 0; i < TNumberOfVariables; ++i) {
       if (degrees_[i] < other[i]) {
         return false;
