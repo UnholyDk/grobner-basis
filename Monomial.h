@@ -28,14 +28,6 @@ class Monomial {
     }
   };
 
-  auto begin() const { return degrees_.begin(); }
-
-  auto end() const { return degrees_.end(); }
-
-  auto rbegin() const { return degrees_.rbegin(); }
-
-  auto rend() const { return degrees_.rend(); }
-
   const TCoefficient& get_coefficient() const { return coefficient_; }
 
   Monomial operator-() const {
