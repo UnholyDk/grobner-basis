@@ -40,8 +40,9 @@ class MonomialOrder {
   }
 
   MonomialOrder operator+(const MonomialOrder &other) const {
-    compare_container_type tmp_comparators = comparators_;
-    return std::move(tmp_comparators += other);
+    MonomialOrder tmp = *this;
+    tmp += other;
+    return tmp;
   }
 
   bool is_less(const monomial &mon1, const monomial &mon2) const {
