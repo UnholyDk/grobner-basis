@@ -69,8 +69,9 @@ class Monomial {
   }
 
   Monomial operator*(const TCoefficient &x) const {
-    Monomial tmp_m = *this;
-    return std::move(tmp_m *= x);
+    Monomial tmp = *this;
+    tmp *= x;
+    return tmp;
   }
 
   Monomial &operator*=(const Monomial &other) {
