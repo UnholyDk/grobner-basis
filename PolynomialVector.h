@@ -34,7 +34,7 @@ class PolynomialVector {
     auto it1 = pol1.begin();
     auto it2 = pol2.begin();
     while (it1!=pol1.end()) {
-      if ((*it1).equal_of_variables(*it2)) {
+      if ((*it1).are_variable_parts_same(*it2)) {
         return false;
       }
       ++it1;

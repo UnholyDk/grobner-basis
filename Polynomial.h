@@ -29,7 +29,7 @@ class Polynomial {
 
   Polynomial &operator+=(const Monomial<T, TNumberOfVariables> &monomial) {
     for (size_t i = 0; i < monomials_.size(); ++i) {
-      if (monomials_[i].equal_of_variables(monomial)) {
+      if (monomials_[i].are_variable_parts_same(monomial)) {
         if (monomials_[i].get_coefficient()==-monomial.get_coefficient()) {
           monomials_.erase(monomials_.begin() + i);
         } else {

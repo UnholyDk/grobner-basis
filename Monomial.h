@@ -52,13 +52,8 @@ class Monomial {
 
   int &operator[](size_t i) { return degrees_[i]; }
 
-  bool equal_of_variables(const Monomial &other) const {
-    for (size_t i = 0; i < TNumberOfVariables; ++i) {
-      if (degrees_[i]!=other[i]) {
-        return false;
-      }
-    }
-    return true;
+  bool are_variable_parts_same(const Monomial &other) const {
+    return degrees_ == other.degrees_;
   }
 
   bool is_div(const Monomial &other) const {
@@ -108,7 +103,7 @@ class Monomial {
 
   bool operator==(const Monomial &other) const {
     return coefficient_==other.coefficient_==0 ||
-        (equal_of_variables(other) && coefficient_==other.coefficient_);
+        (are_variable_parts_same(other) && coefficient_==other.coefficient_);
   }
 
   bool operator!=(const Monomial &other) const { return !(*this==other); }
