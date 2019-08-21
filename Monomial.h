@@ -36,6 +36,12 @@ class Monomial {
 
   TCoefficient get_coefficient() const { return coefficient_; }
 
+  Monomial operator-() const {
+    Monomial tmp = *this;
+    tmp.coefficient_ = -coefficient_;
+    return tmp;
+  }
+
   int operator[](size_t i) const {
     if (0 <= i && i < TNumberOfVariables)
       return degrees_[i];
@@ -62,6 +68,11 @@ class Monomial {
     return true;
   }
 
+  Monomial &merge_monomial(const Monomial &other) {
+    coefficient_ += other.coefficient_;
+    return *this;
+  }
+
   Monomial &operator*=(const TCoefficient &x) {
     coefficient_ *= x;
     return *this;
@@ -85,11 +96,6 @@ class Monomial {
     return std::move(tmp_m *= other);
   }
 
-  Monomial &merge_monomial(const Monomial &other) {
-    coefficient_ += other.coefficient_;
-    return *this;
-  }
-
   Monomial operator/(const Monomial &other) const {
     deg_container_type degrees;
     for (size_t i = 0; i < TNumberOfVariables; ++i) {
@@ -105,28 +111,19 @@ class Monomial {
 
   bool operator!=(const Monomial &other) const { return !(*this==other); }
 
-  Monomial
-  operator-() const {
-    Monomial tmp = *this;
-    tmp.coefficient_ = -coefficient_;
-    return tmp;
-  }
-
  private:
   TCoefficient coefficient_;
   deg_container_type degrees_;
 };
 
-void
-print_variable(std::ostream &os, size_t i, deg_value_type deg) {
+void print_variable(std::ostream &os, size_t i, deg_value_type deg) {
   os << char('a' + i);
   if (deg!=1)
     os << '^' << deg;
 }
 
 template<class TCoefficient, number_of_variables_type TNumberOfVariables>
-void
-print_variables(std::ostream &os,
+void print_variables(std::ostream &os,
                 Monomial<TCoefficient, TNumberOfVariables> const &m) {
   size_t i = 0;
   for (auto &deg : m) {
@@ -138,8 +135,7 @@ print_variables(std::ostream &os,
 } // namespace grobner
 
 template<class TCoefficient, number_of_variables_type TNumberOfVariables>
-std::ostream &
-operator<<(std::ostream &os,
+std::ostream & operator<<(std::ostream &os,
            grobner::Monomial<TCoefficient, TNumberOfVariables> const &m) {
   if (m.get_coefficient()!=1 && m.get_coefficient()!=-1)
     os << m.get_coefficient();
