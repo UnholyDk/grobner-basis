@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 
-using deg_value_type = int;
+using deg_value_type = unsigned int;
 using number_of_variables_type = size_t;
 
 const number_of_variables_type numberVariables = 26;
