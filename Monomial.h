@@ -22,11 +22,8 @@ class Monomial {
 
   Monomial(TCoefficient coefficient) : coefficient_(std::move(coefficient)) {};
 
-  Monomial(TCoefficient coefficient, deg_container_type &degrees) : coefficient_(std::move(coefficient)) {
-    for (size_t i = 0; i < std::min(degrees.size(), size_t(TNumberOfVariables));
-         ++i) {
-      degrees_[i] = degrees[i];
-    }
+  Monomial(TCoefficient coefficient, const deg_container_type &degrees) : coefficient_(std::move(coefficient)) {
+    degrees_ = degrees;
   };
 
   TCoefficient& get_coefficient() { return coefficient_; }
