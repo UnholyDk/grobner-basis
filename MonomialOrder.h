@@ -12,8 +12,7 @@ class MonomialOrder {
  public:
   MonomialOrder() {}
 
-  MonomialOrder(compare_container_type comparators)
-      : comparators_(std::move(comparators)) {}
+  MonomialOrder(std::initializer_list<compare_type> comparators) : comparators_(comparators) {}
 
   auto begin() { return comparators_.begin(); }
 
