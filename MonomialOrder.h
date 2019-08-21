@@ -10,7 +10,7 @@ class MonomialOrder {
   using compare_container_type = std::vector<compare_type>;
 
  public:
-  MonomialOrder() {}
+  MonomialOrder() = default;
 
   MonomialOrder(std::initializer_list<compare_type> comparators) : comparators_(comparators) {}
 
