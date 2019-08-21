@@ -4,23 +4,25 @@
 #include <string>
 #include <vector>
 
-using deg_value_type = unsigned int;
-using number_of_variables_type = size_t;
 
-const number_of_variables_type numberVariables = 26;
-
-using deg_container_type = std::array<deg_value_type, numberVariables>;
+namespace detail {
+constexpr size_t gDefaultNumberOfVariables = 26;
+}
 
 namespace grobner {
-template<class TCoefficient, size_t TNumberOfVariables>
+using number_of_variables_type = size_t;
+template<class TCoefficient, number_of_variables_type TNumberOfVariables = detail::gDefaultNumberOfVariables>
 class Monomial {
 
  public:
-  using variable_index_type = size_t;
+  using number_of_variables_type = grobner::number_of_variables_type;
+  using deg_value_type = int;
+  using index_type = size_t;
   using deg_container_type = std::array<deg_value_type, TNumberOfVariables>;
-  using index_type = number_of_variables_type;
 
-  Monomial(TCoefficient coefficient) : coefficient_(std::move(coefficient)) {};
+  Monomial(TCoefficient coefficient) : coefficient_(std::move(coefficient)) {
+    degrees_.fill(0);
+  };
 
   Monomial(TCoefficient coefficient, const deg_container_type &degrees) : coefficient_(std::move(coefficient)) {
     degrees_ = degrees;
@@ -29,6 +31,10 @@ class Monomial {
   TCoefficient& get_coefficient() { return coefficient_; }
 
   const TCoefficient& get_coefficient() const { return coefficient_; }
+
+  index_type amount_of_variables() const {
+    return TNumberOfVariables;
+  }
 
   Monomial operator-() const {
     Monomial tmp = *this;
@@ -95,10 +101,6 @@ class Monomial {
   }
 
   bool operator!=(const Monomial &other) const { return !(*this==other); }
-
-  index_type amount_of_variables() const {
-    return TNumberOfVariables;
-  }
 
   friend inline std::ostream & operator<<(std::ostream &os, const Monomial &monomial) {
     print_coefficient(os, monomial.get_coefficient());
