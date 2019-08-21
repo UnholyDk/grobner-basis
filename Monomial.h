@@ -36,7 +36,7 @@ class Monomial {
 
   auto rend() const { return degrees_.rend(); }
 
-  TCoefficient get_coefficient() const { return coefficient_; }
+  const TCoefficient& get_coefficient() const { return coefficient_; }
 
   Monomial operator-() const {
     Monomial tmp = *this;
