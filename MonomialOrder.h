@@ -60,7 +60,7 @@ class MonomialOrder {
   static MonomialOrder Lex() {
     return std::initializer_list<compare_type>{([](const Monomial<T, TNumberOfVariables> &mon1,
                                                    const Monomial<T, TNumberOfVariables> &mon2) {
-      for (size_t i = 0; i < 26; ++i) {
+      for (size_t i = 0; i < TNumberOfVariables; ++i) {
         if (mon1[i]!=mon2[i]) {
           return mon1[i] < mon2[i];
         }
