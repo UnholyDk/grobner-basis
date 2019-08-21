@@ -12,10 +12,11 @@ const number_of_variables_type numberVariables = 26;
 using deg_container_type = std::array<deg_value_type, numberVariables>;
 
 namespace grobner {
-template<class TCoefficient, number_of_variables_type TNumberOfVariables>
+template<class TCoefficient, size_t TNumberOfVariables>
 class Monomial {
 
  public:
+  using variable_index_type = size_t;
   using deg_container_type = std::array<deg_value_type, TNumberOfVariables>;
   using index_type = number_of_variables_type;
 
