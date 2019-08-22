@@ -3,7 +3,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
-
+#include <stdexcept>
 
 namespace detail {
 constexpr size_t gDefaultNumberOfVariables = 26;
@@ -27,7 +27,6 @@ class Monomial {
   Monomial(TCoefficient coefficient, const deg_container_type& degrees) : coefficient_(std::move(coefficient)) {
     degrees_ = degrees;
   };
-
   TCoefficient& get_coefficient() { return coefficient_; }
 
   const TCoefficient& get_coefficient() const { return coefficient_; }
@@ -57,7 +56,7 @@ class Monomial {
   }
 
   bool is_divisible(const Monomial &other) const {
-    for (index_type i = 0; i < TNumberOfVariables; ++i) {
+    for (index_type i = 0; i < degrees_.size(); ++i) {
       if (degrees_[i] < other[i]) {
         return false;
       }
@@ -89,12 +88,21 @@ class Monomial {
     return std::move(tmp_m *= other);
   }
 
-  Monomial operator/(const Monomial &other) const {
-    deg_container_type degrees;
-    for (index_type i = 0; i < TNumberOfVariables; ++i) {
-      degrees[i] = degrees_[i] - other[i];
+  Monomial& operator/=(const Monomial& other) {
+    assert(is_divisible(other));
+    for (index_type index = 0; index < degrees_.size(); ++index) {
+      if (degrees_[index] < other.degrees_[index])
+        throw std::invalid_argument("exception");
+      degrees_[index] -= other.degrees_[index];
     }
-    return Monomial(coefficient_/other.get_coefficient(), degrees);
+    coefficient_ /= other.coefficient_;
+    return *this;
+  }
+
+  Monomial operator/(const Monomial &other) const {
+    Monomial monomial = Monomial(coefficient_, degrees_);
+    monomial /= other;
+    return monomial;
   }
 
   bool operator==(const Monomial &other) const {
