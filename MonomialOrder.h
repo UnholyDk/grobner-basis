@@ -5,6 +5,7 @@ namespace grobner {
 template<typename T, number_of_variables_type TNumberOfVariables = detail::gDefaultNumberOfVariables>
 class MonomialOrder {
   using monomial = Monomial<T, TNumberOfVariables>;
+  using index_type = typename monomial::index_type;
   using compare_signature_type = bool(const monomial &, const monomial &);
   using compare_type = std::function<compare_signature_type>;
   using compare_container_type = std::vector<compare_type>;
@@ -61,7 +62,7 @@ class MonomialOrder {
   static MonomialOrder Lex() {
     return std::initializer_list<compare_type>{([](const Monomial<T, TNumberOfVariables> &mon1,
                                                    const Monomial<T, TNumberOfVariables> &mon2) {
-      for (size_t i = 0; i < TNumberOfVariables; ++i) {
+      for (index_type i = 0; i < TNumberOfVariables; ++i) {
         if (mon1[i]!=mon2[i]) {
           return mon1[i] < mon2[i];
         }
@@ -73,7 +74,7 @@ class MonomialOrder {
   static MonomialOrder RevLex() {
     return std::initializer_list<compare_type>{([](const Monomial<T, TNumberOfVariables> &mon1,
                                                    const Monomial<T, TNumberOfVariables> &mon2) {
-      for (size_t i = 0; i < TNumberOfVariables; ++i) {
+      for (index_type i = 0; i < TNumberOfVariables; ++i) {
         if (mon1[i]!=mon2[i]) {
           return mon1[i] > mon2[i];
         }

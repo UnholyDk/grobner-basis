@@ -57,7 +57,7 @@ class Monomial {
   }
 
   bool is_divisible(const Monomial &other) const {
-    for (size_t i = 0; i < TNumberOfVariables; ++i) {
+    for (index_type i = 0; i < TNumberOfVariables; ++i) {
       if (degrees_[i] < other[i]) {
         return false;
       }
@@ -78,7 +78,7 @@ class Monomial {
 
   Monomial &operator*=(const Monomial &other) {
     coefficient_ *= other.get_coefficient();
-    for (size_t i = 0; i < TNumberOfVariables; ++i) {
+    for (index_type i = 0; i < TNumberOfVariables; ++i) {
       degrees_[i] += other[i];
     }
     return *this;
@@ -91,7 +91,7 @@ class Monomial {
 
   Monomial operator/(const Monomial &other) const {
     deg_container_type degrees;
-    for (size_t i = 0; i < TNumberOfVariables; ++i) {
+    for (index_type i = 0; i < TNumberOfVariables; ++i) {
       degrees[i] = degrees_[i] - other[i];
     }
     return Monomial(coefficient_/other.get_coefficient(), degrees);
