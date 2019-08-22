@@ -16,15 +16,15 @@ class Monomial {
 
  public:
   using number_of_variables_type = grobner::number_of_variables_type;
-  using deg_value_type = int;
+  using degree_value_type = int;
   using index_type = size_t;
-  using deg_container_type = std::array<deg_value_type, TNumberOfVariables>;
+  using deg_container_type = std::array<degree_value_type, TNumberOfVariables>;
 
   Monomial(TCoefficient coefficient) : coefficient_(std::move(coefficient)) {
     degrees_.fill(0);
   };
 
-  Monomial(TCoefficient coefficient, const deg_container_type &degrees) : coefficient_(std::move(coefficient)) {
+  Monomial(TCoefficient coefficient, const deg_container_type& degrees) : coefficient_(std::move(coefficient)) {
     degrees_ = degrees;
   };
 
@@ -42,12 +42,12 @@ class Monomial {
     return tmp;
   }
 
-  deg_value_type operator[](index_type index) const {
+  degree_value_type operator[](index_type index) const {
     assert(index < degrees_.size());
     return degrees_[index];
   }
 
-  deg_value_type& operator[](index_type index) {
+  degree_value_type& operator[](index_type index) {
     assert(index < degrees_.size());
     return degrees_[index];
   }
@@ -115,7 +115,7 @@ class Monomial {
   TCoefficient coefficient_;
   deg_container_type degrees_;
 
-  static void print_variable(std::ostream &os, index_type index, deg_value_type deg) {
+  static void print_variable(std::ostream &os, index_type index, degree_value_type deg) {
     if (deg == 0)
       return;
     os << char('a' + index);

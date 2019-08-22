@@ -9,12 +9,12 @@ using type_rational = boost::rational<int>;
 using type_residue = ResidueModulo;
 
 int test_1(std::ofstream &output) {
-  using deg_value_type = grobner::Monomial<type_rational>::deg_value_type;
+  using degree_value_type = grobner::Monomial<type_rational>::degree_value_type;
 
   grobner::PolynomialVector<type_rational> syst;
   grobner::Polynomial<type_rational> f1, f2, f3, f4, g, ans;
-  std::array<deg_value_type, detail::gDefaultNumberOfVariables> d;
-  std::array<deg_value_type , detail::gDefaultNumberOfVariables> e;
+  std::array<degree_value_type, detail::gDefaultNumberOfVariables> d;
+  std::array<degree_value_type , detail::gDefaultNumberOfVariables> e;
   d.fill(0);
   e.fill(0);
   d[0] = 2;
@@ -73,12 +73,12 @@ int test_1(std::ofstream &output) {
 }
 
 int test_2(std::ofstream &output) {
-  using deg_value_type = grobner::Monomial<type_rational>::deg_value_type;
+  using degree_value_type = grobner::Monomial<type_rational>::degree_value_type;
 
   grobner::PolynomialVector<type_rational> syst;
   grobner::Polynomial<type_rational> f1, f2, g;
-  std::array<deg_value_type, detail::gDefaultNumberOfVariables> d;
-  std::array<deg_value_type, detail::gDefaultNumberOfVariables> e;
+  std::array<degree_value_type, detail::gDefaultNumberOfVariables> d;
+  std::array<degree_value_type, detail::gDefaultNumberOfVariables> e;
   d.fill(0);
   e.fill(0);
   d[0] = 2;
@@ -118,12 +118,12 @@ int test_2(std::ofstream &output) {
 }
 
 int test_3(std::ofstream &output) {
-  using deg_value_type = grobner::Monomial<type_rational>::deg_value_type;
+  using degree_value_type = grobner::Monomial<type_rational>::degree_value_type;
 
   grobner::PolynomialVector<type_rational> syst;
   grobner::Polynomial<type_rational> f1, f2, f3;
-  std::array<deg_value_type, detail::gDefaultNumberOfVariables> d;
-  std::array<deg_value_type, detail::gDefaultNumberOfVariables> e;
+  std::array<degree_value_type, detail::gDefaultNumberOfVariables> d;
+  std::array<degree_value_type, detail::gDefaultNumberOfVariables> e;
   d.fill(0);
   e.fill(0);
   d[0] = 1;
@@ -165,12 +165,12 @@ int test_3(std::ofstream &output) {
 }
 
 int test_4(std::ofstream &output) {
-  using deg_value_type = grobner::Monomial<type_rational>::deg_value_type;
+  using degree_value_type = grobner::Monomial<type_rational>::degree_value_type;
 
   grobner::PolynomialVector<type_rational> syst;
   grobner::Polynomial<type_rational> f1, f2;
-  std::array<deg_value_type, detail::gDefaultNumberOfVariables> d;
-  std::array<deg_value_type, detail::gDefaultNumberOfVariables> e;
+  std::array<degree_value_type, detail::gDefaultNumberOfVariables> d;
+  std::array<degree_value_type, detail::gDefaultNumberOfVariables> e;
   d.fill(0);
   e.fill(0);
   d[0] = 2;
@@ -206,7 +206,7 @@ int test_4(std::ofstream &output) {
 }
 
 int test_5(std::ofstream &output) {
-  using deg_value_type = grobner::Monomial<type_residue>::deg_value_type;
+  using degree_value_type = grobner::Monomial<type_residue>::degree_value_type;
 
   ResidueModulo a1(1, 7);
   ResidueModulo a2(-1, 7);
@@ -217,8 +217,8 @@ int test_5(std::ofstream &output) {
 
   grobner::PolynomialVector<type_residue> syst;
   grobner::Polynomial<type_residue> f1, f2, f3, f4, g, ans;
-  std::array<deg_value_type, detail::gDefaultNumberOfVariables> d;
-  std::array<deg_value_type, detail::gDefaultNumberOfVariables> e;
+  std::array<degree_value_type, detail::gDefaultNumberOfVariables> d;
+  std::array<degree_value_type, detail::gDefaultNumberOfVariables> e;
   d.fill(0);
   e.fill(0);
   d[0] = 2;
