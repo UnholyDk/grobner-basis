@@ -16,7 +16,7 @@ class Monomial {
 
  public:
   using number_of_variables_type = grobner::number_of_variables_type;
-  using degree_value_type = int;
+  using degree_value_type = unsigned int;
   using index_type = size_t;
   using deg_container_type = std::array<degree_value_type, TNumberOfVariables>;
 
