@@ -120,22 +120,20 @@ class Polynomial {
 
   [[nodiscard]] bool empty() const { return amount_of_monomials()==0; }
 
+  friend inline std::ostream &operator<<(std::ostream &os, Polynomial const &pol) {
+    if (pol.empty())
+      os << 0;
+    auto it = pol.begin();
+    os << '(' << *it << ')';
+    ++it;
+    while (it != pol.end()) {
+      os << "+(" <<*it << ')';
+      ++it;
+    }
+    return os;
+  }
+
  private:
   container_type monomials_;
 };
 }  // namespace grobner
-
-template<class T, grobner::number_of_variables_type TNumberOfVariables = detail::gDefaultNumberOfVariables>
-std::ostream &operator<<(
-    std::ostream &os, grobner::Polynomial<T, TNumberOfVariables> const &pol) {
-  if (pol.empty())
-    os << 0;
-  auto it = pol.begin();
-  os << '(' << *it << ')';
-  ++it;
-  while (it != pol.end()) {
-    os << "+(" <<*it << ')';
-    ++it;
-  }
-  return os;
-}
