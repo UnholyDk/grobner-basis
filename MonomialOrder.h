@@ -84,7 +84,7 @@ class MonomialOrder {
   }
 
   static const MonomialOrder& Deg() {
-    static MonomialOrder DegOrder ([](const Monomial<T, TNumberOfVariables> &mon1,
+    static MonomialOrder DegOrder {[](const Monomial<T, TNumberOfVariables> &mon1,
                                       const Monomial<T, TNumberOfVariables> &mon2){
       unsigned int sum1 = 0, sum2 = 0;
       for (index_type i = 0; i < TNumberOfVariables; ++i) {
@@ -92,7 +92,7 @@ class MonomialOrder {
         sum2 += mon2[i];
       }
       return sum1 < sum2;
-    });
+    }};
     return DegOrder;
   }
 
