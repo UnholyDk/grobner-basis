@@ -11,9 +11,7 @@ class MonomialOrder {
   using compare_container_type = std::vector<compare_type>;
 
  public:
-  MonomialOrder() = default;
 
-  MonomialOrder(std::initializer_list<compare_type> comparators) : comparators_(comparators) {}
 
   auto begin() { return comparators_.begin(); }
 
@@ -59,31 +57,55 @@ class MonomialOrder {
     return !is_less(mon2, mon1);
   }
 
-  static MonomialOrder Lex() {
-    return std::initializer_list<compare_type>{([](const Monomial<T, TNumberOfVariables> &mon1,
-                                                   const Monomial<T, TNumberOfVariables> &mon2) {
+  static const MonomialOrder& Lex() {
+    static MonomialOrder LexOrder{[](const Monomial<T, TNumberOfVariables> &mon1,
+                                     const Monomial<T, TNumberOfVariables> &mon2){
       for (index_type i = 0; i < TNumberOfVariables; ++i) {
         if (mon1[i]!=mon2[i]) {
           return mon1[i] < mon2[i];
         }
       }
       return false;
-    })};
+    }};
+    return LexOrder;
   }
 
-  static MonomialOrder RevLex() {
-    return std::initializer_list<compare_type>{([](const Monomial<T, TNumberOfVariables> &mon1,
-                                                   const Monomial<T, TNumberOfVariables> &mon2) {
+  static const MonomialOrder& RevLex() {
+    static MonomialOrder RevLexOrder{[](const Monomial<T, TNumberOfVariables> &mon1,
+                                        const Monomial<T, TNumberOfVariables> &mon2){
       for (index_type i = 0; i < TNumberOfVariables; ++i) {
         if (mon1[i]!=mon2[i]) {
           return mon1[i] > mon2[i];
         }
       }
       return false;
-    })};
+    }};
+    return RevLexOrder;
+  }
+
+  static const MonomialOrder& Deg() {
+    static MonomialOrder DegOrder ([](const Monomial<T, TNumberOfVariables> &mon1,
+                                      const Monomial<T, TNumberOfVariables> &mon2){
+      unsigned int sum1 = 0, sum2 = 0;
+      for (index_type i = 0; i < TNumberOfVariables; ++i) {
+        sum1 += mon1[i];
+        sum2 += mon2[i];
+      }
+      return sum1 < sum2;
+    });
+    return DegOrder;
+  }
+
+  static const MonomialOrder& DegLex(){
+    static MonomialOrder DegLexOrder = Deg() + Lex();
+    return DegLexOrder;
   }
 
  private:
   compare_container_type comparators_;
+
+  MonomialOrder() = default;
+
+  MonomialOrder(std::initializer_list<compare_type> comparators) : comparators_(comparators) {}
 };
 }  // namespace grobner
