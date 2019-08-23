@@ -48,7 +48,7 @@ class MonomialOrder {
 
   bool is_less(const monomial &mon1, const monomial &mon2) const {
     for (auto comparator : comparators_) {
-      if (comparator(mon1, mon2)!=comparator(mon2, mon1)) {
+      if (comparator(mon1, mon2)||comparator(mon2, mon1)) {
         return comparator(mon1, mon2);
       }
     }

@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <stdexcept>
+#include <cassert>
 
 namespace detail {
 constexpr size_t gDefaultNumberOfVariables = 26;
