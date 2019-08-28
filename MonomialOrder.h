@@ -11,20 +11,6 @@ class MonomialOrder {
   using compare_container_type = std::vector<compare_type>;
 
  public:
-
-
-  auto begin() { return comparators_.begin(); }
-
-  auto end() { return comparators_.end(); }
-
-  auto rbegin() { return comparators_.rbegin(); }
-
-  auto rend() { return comparators_.rend(); }
-
-  size_t size() {
-    return comparators_.size();
-  }
-
   bool is_less(const monomial &mon1, const monomial &mon2) const {
     for (auto comparator : comparators_) {
       if (comparator(mon1, mon2)||comparator(mon2, mon1)) {
