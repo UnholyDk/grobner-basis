@@ -17,7 +17,7 @@ class Monomial {
 
  public:
   using degree_value_type = unsigned int;
-  using index_type = size_t;
+  using index_type = grobner::index_type;
   using deg_container_type = std::array<degree_value_type, TNumberOfVariables>;
 
   Monomial(TCoefficient coefficient) : coefficient_(std::move(coefficient)) {
