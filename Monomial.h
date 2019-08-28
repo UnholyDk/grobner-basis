@@ -121,7 +121,6 @@ class Monomial {
   }
 
  private:
-  TCoefficient coefficient_;
   deg_container_type degrees_;
 
   static void print_variable(std::ostream &os, index_type index, degree_value_type deg) {
@@ -145,6 +144,8 @@ class Monomial {
     else
       os << coefficient;
   }
+
+  TCoefficient coefficient_;
 };
 
 } // namespace grobner
