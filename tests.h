@@ -14,7 +14,7 @@ void test_1(std::ofstream &output) {
   grobner::PolynomialVector<type_rational> syst;
   grobner::Polynomial<type_rational> f1, f2, f3, f4, g, ans;
   std::array<degree_value_type, detail::gDefaultNumberOfVariables> d;
-  std::array<degree_value_type , detail::gDefaultNumberOfVariables> e;
+  std::array<degree_value_type, detail::gDefaultNumberOfVariables> e;
   d.fill(0);
   e.fill(0);
   d[0] = 2;
@@ -66,7 +66,7 @@ void test_1(std::ofstream &output) {
   grobner::Monomial<type_rational> g1(5, d), g2(-1, e);
   g += g1;
   g += g2;
-  grobner::MonomialOrder<type_rational>lex = grobner::MonomialOrder<type_rational>::Lex();
+  grobner::MonomialOrder<type_rational> lex = grobner::MonomialOrder<type_rational>::Lex();
   grobner::Algorithm<type_rational> alg(lex);
   output << alg.reduction(g, syst) << "\n"; // ans = -0.5ac^4
 }
@@ -109,7 +109,7 @@ void test_2(std::ofstream &output) {
   grobner::Monomial<type_rational> g1(5, d), g2(-1, e);
   g += g1;
   g += g2;
-  grobner::MonomialOrder<type_rational>lex = grobner::MonomialOrder<type_rational>::Lex();
+  grobner::MonomialOrder<type_rational> lex = grobner::MonomialOrder<type_rational>::Lex();
   grobner::Algorithm<type_rational> alg(lex);
   syst = alg.Buchberger(syst);
   output << alg.reduction(g, syst) << "\n"; // ans = -0.5ac^4
@@ -195,7 +195,7 @@ void test_4(std::ofstream &output) {
   f2 += f21;
   f2 += f22;
   syst.add_pol(f2);
-  grobner::MonomialOrder<type_rational>lex = grobner::MonomialOrder<type_rational>::Lex();
+  grobner::MonomialOrder<type_rational> lex = grobner::MonomialOrder<type_rational>::Lex();
   grobner::Algorithm<type_rational> alg(lex);
   syst = alg.Buchberger(syst);
   output << syst[2] << "\n"; // ans = +(-1c^3)+(-2ac^2)+(-1a^2)
@@ -266,7 +266,7 @@ void test_5(std::ofstream &output) {
   grobner::Monomial<type_residue> g1(a3, d), g2(a2, e);
   g += g1;
   g += g2;
-  grobner::MonomialOrder<type_residue>lex = grobner::MonomialOrder<type_residue>::Lex();
+  grobner::MonomialOrder<type_residue> lex = grobner::MonomialOrder<type_residue>::Lex();
   grobner::Algorithm<type_residue> alg(lex);
   output << alg.reduction(g, syst) << "\n"; // ans = 5a^2c^4
 }

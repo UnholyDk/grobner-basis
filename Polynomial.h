@@ -30,7 +30,7 @@ class Polynomial {
   Polynomial &operator+=(const Monomial<T, TNumberOfVariables> &monomial) {
     for (size_t i = 0; i < monomials_.size(); ++i) {
       if (monomials_[i].are_variable_parts_same(monomial)) {
-        if (monomials_[i].get_coefficient()==-monomial.get_coefficient()) {
+        if (monomials_[i].get_coefficient() == -monomial.get_coefficient()) {
           monomials_.erase(monomials_.begin() + i);
         } else {
           monomials_[i].get_coefficient() += monomial.get_coefficient();
@@ -74,7 +74,7 @@ class Polynomial {
   }
 
   Polynomial &operator*=(const T &coefficient) {
-    if (coefficient==0) {
+    if (coefficient == 0) {
       monomials_.clear();
       return *this;
     } else {
@@ -95,7 +95,7 @@ class Polynomial {
     monomials_.clear();
     for (const auto &mon_from_this : tmp_p.monomials_) {
       for (const auto &mon_from_other : other.monomials_) {
-        *this += mon_from_this*mon_from_other;
+        *this += mon_from_this * mon_from_other;
       }
     }
     return *this;
@@ -118,7 +118,7 @@ class Polynomial {
 
   size_t amount_of_monomials() const { return monomials_.size(); }
 
-  [[nodiscard]] bool empty() const { return amount_of_monomials()==0; }
+  [[nodiscard]] bool empty() const { return amount_of_monomials() == 0; }
 
   friend inline std::ostream &operator<<(std::ostream &os, Polynomial const &pol) {
     if (pol.empty())
@@ -127,7 +127,7 @@ class Polynomial {
     os << '(' << *it << ')';
     ++it;
     while (it != pol.end()) {
-      os << "+(" <<*it << ')';
+      os << "+(" << *it << ')';
       ++it;
     }
     return os;

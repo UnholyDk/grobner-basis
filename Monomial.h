@@ -25,12 +25,12 @@ class Monomial {
     degrees_.fill(0);
   };
 
-  Monomial(TCoefficient coefficient, const deg_container_type& degrees) : coefficient_(std::move(coefficient)) {
+  Monomial(TCoefficient coefficient, const deg_container_type &degrees) : coefficient_(std::move(coefficient)) {
     degrees_ = degrees;
   };
-  TCoefficient& get_coefficient() { return coefficient_; }
+  TCoefficient &get_coefficient() { return coefficient_; }
 
-  const TCoefficient& get_coefficient() const { return coefficient_; }
+  const TCoefficient &get_coefficient() const { return coefficient_; }
 
   index_type amount_of_variables() const {
     return TNumberOfVariables;
@@ -47,7 +47,7 @@ class Monomial {
     return degrees_[index];
   }
 
-  degree_value_type& operator[](index_type index) {
+  degree_value_type &operator[](index_type index) {
     assert(index < degrees_.size());
     return degrees_[index];
   }
@@ -89,7 +89,7 @@ class Monomial {
     return std::move(tmp_m *= other);
   }
 
-  Monomial& operator/=(const Monomial& other) {
+  Monomial &operator/=(const Monomial &other) {
     assert(is_divisible(other));
     for (index_type index = 0; index < degrees_.size(); ++index) {
       if (degrees_[index] < other.degrees_[index])
@@ -107,13 +107,13 @@ class Monomial {
   }
 
   bool operator==(const Monomial &other) const {
-    return coefficient_==other.coefficient_==0 ||
-        (are_variable_parts_same(other) && coefficient_==other.coefficient_);
+    return coefficient_ == other.coefficient_ == 0 ||
+        (are_variable_parts_same(other) && coefficient_ == other.coefficient_);
   }
 
-  bool operator!=(const Monomial &other) const { return !(*this==other); }
+  bool operator!=(const Monomial &other) const { return !(*this == other); }
 
-  friend inline std::ostream & operator<<(std::ostream &os, const Monomial &monomial) {
+  friend inline std::ostream &operator<<(std::ostream &os, const Monomial &monomial) {
     print_coefficient(os, monomial.get_coefficient());
     if (monomial.get_coefficient() != 0)
       print_variables(os, monomial);
@@ -127,11 +127,11 @@ class Monomial {
     if (deg == 0)
       return;
     os << char('a' + index);
-    if (deg!=1)
+    if (deg != 1)
       os << '^' << deg;
   }
 
-   static void print_variables(std::ostream &os, Monomial const &monomial) {
+  static void print_variables(std::ostream &os, Monomial const &monomial) {
     for (index_type index = 0; index < monomial.amount_of_variables(); ++index)
       print_variable(os, index, monomial[index]);
   }

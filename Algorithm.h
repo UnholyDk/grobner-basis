@@ -31,8 +31,8 @@ class Algorithm {
         for (const auto &pol_from_s : syst_f) {
           if (mon_from_ans.is_divisible(L(pol_from_s))) {
             Monomial<T, TNumberOfVariables> tmp_c =
-                mon_from_ans/L(pol_from_s);
-            ans -= pol_from_s*tmp_c;
+                mon_from_ans / L(pol_from_s);
+            ans -= pol_from_s * tmp_c;
             sort_pol(ans);
             if (i >= ans.amount_of_monomials()) {
               can_red = false;
@@ -58,7 +58,7 @@ class Algorithm {
       for (int j = i - 1; j >= 0; --j) {
         Polynomial<T, TNumberOfVariables> red_s_pol =
             reduction(S(ans_syst[i], ans_syst[j]), ans_syst);
-        if (red_s_pol.amount_of_monomials()!=0) {
+        if (red_s_pol.amount_of_monomials() != 0) {
           ans_syst.add_pol(red_s_pol);
         }
       }
@@ -113,8 +113,8 @@ class Algorithm {
     Monomial<T, TNumberOfVariables> m_2(L(f_1).get_coefficient(),
                                         tmp_deegs.second);
     Polynomial<T, TNumberOfVariables> ans;
-    ans += f_1*m_1;
-    ans -= f_2*m_2;
+    ans += f_1 * m_1;
+    ans -= f_2 * m_2;
     return sort_pol(ans);
   }
 

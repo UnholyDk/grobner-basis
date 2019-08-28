@@ -28,12 +28,12 @@ class PolynomialVector {
 
   bool equal_of_monoms_sorted(const Polynomial<T, TNumberOfVariables> &pol1,
                               const Polynomial<T, TNumberOfVariables> &pol2) {
-    if (pol1.size()!=pol2.size()) {
+    if (pol1.size() != pol2.size()) {
       return false;
     }
     auto it1 = pol1.begin();
     auto it2 = pol2.begin();
-    while (it1!=pol1.end()) {
+    while (it1 != pol1.end()) {
       if ((*it1).are_variable_parts_same(*it2)) {
         return false;
       }
