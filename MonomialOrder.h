@@ -25,8 +25,8 @@ class MonomialOrder {
   }
 
   static const MonomialOrder &Lex() {
-    static MonomialOrder LexOrder{[](const Monomial<T, TNumberOfVariables> &mon1,
-                                     const Monomial<T, TNumberOfVariables> &mon2) {
+    static MonomialOrder LexOrder{[](const monomial &mon1,
+                                     const monomial &mon2) {
       for (index_type i = 0; i < TNumberOfVariables; ++i) {
         if (mon1[i] != mon2[i]) {
           return mon1[i] < mon2[i];
@@ -38,8 +38,8 @@ class MonomialOrder {
   }
 
   static const MonomialOrder &RevLex() {
-    static MonomialOrder RevLexOrder{[](const Monomial<T, TNumberOfVariables> &mon1,
-                                        const Monomial<T, TNumberOfVariables> &mon2) {
+    static MonomialOrder RevLexOrder{[](const monomial &mon1,
+                                        const monomial &mon2) {
       for (index_type i = 0; i < TNumberOfVariables; ++i) {
         if (mon1[i] != mon2[i]) {
           return mon1[i] > mon2[i];
@@ -51,8 +51,8 @@ class MonomialOrder {
   }
 
   static const MonomialOrder &Deg() {
-    static MonomialOrder DegOrder{[](const Monomial<T, TNumberOfVariables> &mon1,
-                                     const Monomial<T, TNumberOfVariables> &mon2) {
+    static MonomialOrder DegOrder{[](const monomial &mon1,
+                                     const monomial &mon2) {
       unsigned int sum1 = 0, sum2 = 0;
       for (index_type i = 0; i < TNumberOfVariables; ++i) {
         sum1 += mon1[i];
