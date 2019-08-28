@@ -85,7 +85,8 @@ class Monomial {
 
   Monomial operator*(const Monomial &other) const {
     Monomial tmp_m = *this;
-    return std::move(tmp_m *= other);
+    tmp_m *= other;
+    return tmp_m;
   }
 
   Monomial &operator/=(const Monomial &other) {
