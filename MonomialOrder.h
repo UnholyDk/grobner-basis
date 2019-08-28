@@ -25,25 +25,6 @@ class MonomialOrder {
     return comparators_.size();
   }
 
-  MonomialOrder &operator+=(const compare_type &compare) {
-    comparators_.push_back(compare);
-    return *this;
-  }
-
-  MonomialOrder &operator+=(const MonomialOrder &other) {
-    comparators_.reserve(comparators_.size() + other.size());
-    comparators_.insert(comparators_.end(),
-                        other.begin(),
-                        other.end());
-    return *this;
-  }
-
-  MonomialOrder operator+(const MonomialOrder &other) const {
-    MonomialOrder tmp = *this;
-    tmp += other;
-    return tmp;
-  }
-
   bool is_less(const monomial &mon1, const monomial &mon2) const {
     for (auto comparator : comparators_) {
       if (comparator(mon1, mon2)||comparator(mon2, mon1)) {
@@ -105,6 +86,25 @@ class MonomialOrder {
   MonomialOrder() = default;
 
   MonomialOrder(std::initializer_list<compare_type> comparators) : comparators_(comparators) {}
+
+  MonomialOrder &operator+=(const compare_type &compare) {
+    comparators_.push_back(compare);
+    return *this;
+  }
+
+  MonomialOrder &operator+=(const MonomialOrder &other) {
+    comparators_.reserve(comparators_.size() + other.size());
+    comparators_.insert(comparators_.end(),
+                        other.begin(),
+                        other.end());
+    return *this;
+  }
+
+  MonomialOrder operator+(const MonomialOrder &other) const {
+    MonomialOrder tmp = *this;
+    tmp += other;
+    return tmp;
+  }
 
   compare_container_type comparators_;
 };
