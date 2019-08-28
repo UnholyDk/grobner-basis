@@ -11,8 +11,8 @@ constexpr size_t gDefaultNumberOfVariables = 26;
 }
 
 namespace grobner {
-using number_of_variables_type = size_t;
-template<class TCoefficient, number_of_variables_type TNumberOfVariables = detail::gDefaultNumberOfVariables>
+using index_type = size_t;
+template<class TCoefficient, index_type TNumberOfVariables = detail::gDefaultNumberOfVariables>
 class Monomial {
 
  public:

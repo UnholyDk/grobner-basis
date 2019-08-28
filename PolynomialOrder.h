@@ -1,7 +1,7 @@
 #include "Polynomial.h"
 
 namespace grobner {
-template<typename T, number_of_variables_type TNumberOfVariables = detail::gDefaultNumberOfVariables>
+template<typename T, index_type TNumberOfVariables = detail::gDefaultNumberOfVariables>
 class PolynomialOrder {
  public:
   PolynomialOrder() {}

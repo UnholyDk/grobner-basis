@@ -2,7 +2,7 @@
 #include "Monomial.h"
 
 namespace grobner {
-template<typename T, number_of_variables_type TNumberOfVariables = detail::gDefaultNumberOfVariables>
+template<typename T, index_type TNumberOfVariables = detail::gDefaultNumberOfVariables>
 class MonomialOrder {
   using monomial = Monomial<T, TNumberOfVariables>;
   using index_type = typename monomial::index_type;
