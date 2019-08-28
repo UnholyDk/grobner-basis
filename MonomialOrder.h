@@ -102,10 +102,10 @@ class MonomialOrder {
   }
 
  private:
-  compare_container_type comparators_;
-
   MonomialOrder() = default;
 
   MonomialOrder(std::initializer_list<compare_type> comparators) : comparators_(comparators) {}
+
+  compare_container_type comparators_;
 };
 }  // namespace grobner
