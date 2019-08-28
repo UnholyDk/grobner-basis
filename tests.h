@@ -8,7 +8,7 @@
 using type_rational = boost::rational<int>;
 using type_residue = ResidueModulo;
 
-int test_1(std::ofstream &output) {
+void test_1(std::ofstream &output) {
   using degree_value_type = grobner::Monomial<type_rational>::degree_value_type;
 
   grobner::PolynomialVector<type_rational> syst;
@@ -69,10 +69,9 @@ int test_1(std::ofstream &output) {
   grobner::MonomialOrder<type_rational>lex = grobner::MonomialOrder<type_rational>::Lex();
   grobner::Algorithm<type_rational> alg(lex);
   output << alg.reduction(g, syst) << "\n"; // ans = -0.5ac^4
-  return 0;
 }
 
-int test_2(std::ofstream &output) {
+void test_2(std::ofstream &output) {
   using degree_value_type = grobner::Monomial<type_rational>::degree_value_type;
 
   grobner::PolynomialVector<type_rational> syst;
@@ -114,10 +113,9 @@ int test_2(std::ofstream &output) {
   grobner::Algorithm<type_rational> alg(lex);
   syst = alg.Buchberger(syst);
   output << alg.reduction(g, syst) << "\n"; // ans = -0.5ac^4
-  return 0;
 }
 
-int test_3(std::ofstream &output) {
+void test_3(std::ofstream &output) {
   using degree_value_type = grobner::Monomial<type_rational>::degree_value_type;
 
   grobner::PolynomialVector<type_rational> syst;
@@ -161,10 +159,9 @@ int test_3(std::ofstream &output) {
   grobner::Algorithm<type_rational> alg(lex);
   syst = alg.Buchberger(syst);
   output << syst[3] << "\n"; // ans = +(-2b)+(-1b^2)
-  return 0;
 }
 
-int test_4(std::ofstream &output) {
+void test_4(std::ofstream &output) {
   using degree_value_type = grobner::Monomial<type_rational>::degree_value_type;
 
   grobner::PolynomialVector<type_rational> syst;
@@ -202,10 +199,9 @@ int test_4(std::ofstream &output) {
   grobner::Algorithm<type_rational> alg(lex);
   syst = alg.Buchberger(syst);
   output << syst[2] << "\n"; // ans = +(-1c^3)+(-2ac^2)+(-1a^2)
-  return 0;
 }
 
-int test_5(std::ofstream &output) {
+void test_5(std::ofstream &output) {
   using degree_value_type = grobner::Monomial<type_residue>::degree_value_type;
 
   ResidueModulo a1(1, 7);
@@ -273,10 +269,9 @@ int test_5(std::ofstream &output) {
   grobner::MonomialOrder<type_residue>lex = grobner::MonomialOrder<type_residue>::Lex();
   grobner::Algorithm<type_residue> alg(lex);
   output << alg.reduction(g, syst) << "\n"; // ans = 5a^2c^4
-  return 0;
 }
 
-int all_tests() {
+void all_tests() {
   std::ofstream output("output.txt");
   test_1(output);
   test_2(output);
@@ -284,5 +279,4 @@ int all_tests() {
   test_4(output);
   test_5(output);
   output.close();
-  return 0;
 }
