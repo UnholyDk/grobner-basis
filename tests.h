@@ -2,8 +2,8 @@
 #include <iostream>
 #include <boost/rational.hpp>
 #include "ResidueModulo.h"
+#include "wFile.h"
 #include <cstdio>
-#include <fstream>
 
 using type_rational = boost::rational<int>;
 using type_residue = ResidueModulo;
