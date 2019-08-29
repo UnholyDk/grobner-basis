@@ -272,13 +272,12 @@ void test_5(std::ofstream &output) {
 }
 
 void all_tests() {
-  std::ofstream output("output.txt");
-  test_1(output);
-  test_2(output);
-  test_3(output);
-  test_4(output);
-  test_5(output);
-  output.close();
+  wFile output("output.txt");
+  test_1(output());
+  test_2(output());
+  test_3(output());
+  test_4(output());
+  test_5(output());
 }
 
 bool check() {
