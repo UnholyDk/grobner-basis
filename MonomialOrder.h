@@ -68,8 +68,13 @@ class MonomialOrder {
   }
 
   static const MonomialOrder &DegLex() {
-    static MonomialOrder DegLexOrder = Deg() + Lex();
+    static MonomialOrder DegLexOrder{Deg() + Lex()};
     return DegLexOrder;
+  }
+
+  static const MonomialOrder &DegRevLex() {
+    static MonomialOrder DegRevLexOrder{Deg() + RevLex()};
+    return DegRevLexOrder;
   }
 
  private:
