@@ -17,7 +17,7 @@ class ResidueModulo {
 
   ResidueModulo getInverseResidue() const {
     type_number number = 1;
-    while (number*number_%modulo_!=1) {
+    while (number * number_ % modulo_ != 1) {
       ++number;
     }
     return ResidueModulo(number, modulo_);
@@ -30,67 +30,67 @@ class ResidueModulo {
   }
 
   ResidueModulo &operator+=(const ResidueModulo &other) {
-    assert(modulo_==other.modulo_);
+    assert(modulo_ == other.modulo_);
     number_ += other.number_;
     number_ %= modulo_;
     return *this;
   }
 
   ResidueModulo operator+(const ResidueModulo &other) const {
-    assert(modulo_==other.modulo_);
+    assert(modulo_ == other.modulo_);
     ResidueModulo tmp = *this;
     tmp += other;
     return std::move(tmp);
   }
 
   ResidueModulo &operator-=(const ResidueModulo &other) {
-    assert(modulo_==other.modulo_);
-    number_ = ((number_ - other.number_)%modulo_ + modulo_)%modulo_;
+    assert(modulo_ == other.modulo_);
+    number_ = ((number_ - other.number_) % modulo_ + modulo_) % modulo_;
     return *this;
   }
 
   ResidueModulo operator-(const ResidueModulo &other) const {
-    assert(modulo_==other.modulo_);
+    assert(modulo_ == other.modulo_);
     ResidueModulo tmp = *this;
     tmp -= other;
     return std::move(tmp);
   }
 
   ResidueModulo &operator*=(const ResidueModulo &other) {
-    assert(modulo_==other.modulo_);
-    number_ = (number_*other.number_)%modulo_;
+    assert(modulo_ == other.modulo_);
+    number_ = (number_ * other.number_) % modulo_;
     return *this;
   }
 
   ResidueModulo operator*(const ResidueModulo &other) const {
-    assert(modulo_==other.modulo_);
+    assert(modulo_ == other.modulo_);
     ResidueModulo tmp = *this;
     tmp *= other;
     return std::move(tmp);
   }
 
   ResidueModulo &operator/=(const ResidueModulo &other) {
-    assert(modulo_==other.modulo_);
+    assert(modulo_ == other.modulo_);
     ResidueModulo tmp = *this;
-    *this = *this*other.getInverseResidue();
+    *this = *this * other.getInverseResidue();
     return *this;
   }
 
   ResidueModulo operator/(const ResidueModulo &other) const {
-    assert(modulo_==other.modulo_);
+    assert(modulo_ == other.modulo_);
     ResidueModulo tmp = *this;
     tmp /= other;
     return std::move(tmp);
   }
 
   bool operator==(const ResidueModulo &other) const {
-    assert(modulo_==other.modulo_);
-    return number_==other.number_;
+    assert(modulo_ == other.modulo_);
+    return number_ == other.number_;
   }
 
   bool operator!=(const ResidueModulo &other) const {
-    assert(modulo_==other.modulo_);
-    return !(*this==other);
+    assert(modulo_ == other.modulo_);
+    return !(*this == other);
   }
 
   operator int() const { return number_; }
