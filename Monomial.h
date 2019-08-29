@@ -6,11 +6,11 @@
 #include <stdexcept>
 #include <cassert>
 
+
+namespace grobner {
 namespace detail {
 constexpr size_t gDefaultNumberOfVariables = 26;
 }
-
-namespace grobner {
 using index_type = size_t;
 template<class TCoefficient, index_type TNumberOfVariables = detail::gDefaultNumberOfVariables>
 class Monomial {

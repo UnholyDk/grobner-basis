@@ -13,8 +13,8 @@ void test_1(std::ofstream &output) {
 
   grobner::PolynomialVector<type_rational> syst;
   grobner::Polynomial<type_rational> f1, f2, f3, f4, g, ans;
-  std::array<degree_value_type, detail::gDefaultNumberOfVariables> d;
-  std::array<degree_value_type, detail::gDefaultNumberOfVariables> e;
+  std::array<degree_value_type, grobner::detail::gDefaultNumberOfVariables> d;
+  std::array<degree_value_type, grobner::detail::gDefaultNumberOfVariables> e;
   d.fill(0);
   e.fill(0);
   d[0] = 2;
@@ -76,8 +76,8 @@ void test_2(std::ofstream &output) {
 
   grobner::PolynomialVector<type_rational> syst;
   grobner::Polynomial<type_rational> f1, f2, g;
-  std::array<degree_value_type, detail::gDefaultNumberOfVariables> d;
-  std::array<degree_value_type, detail::gDefaultNumberOfVariables> e;
+  std::array<degree_value_type, grobner::detail::gDefaultNumberOfVariables> d;
+  std::array<degree_value_type, grobner::detail::gDefaultNumberOfVariables> e;
   d.fill(0);
   e.fill(0);
   d[0] = 2;
@@ -120,8 +120,8 @@ void test_3(std::ofstream &output) {
 
   grobner::PolynomialVector<type_rational> syst;
   grobner::Polynomial<type_rational> f1, f2, f3;
-  std::array<degree_value_type, detail::gDefaultNumberOfVariables> d;
-  std::array<degree_value_type, detail::gDefaultNumberOfVariables> e;
+  std::array<degree_value_type, grobner::detail::gDefaultNumberOfVariables> d;
+  std::array<degree_value_type, grobner::detail::gDefaultNumberOfVariables> e;
   d.fill(0);
   e.fill(0);
   d[0] = 1;
@@ -166,8 +166,8 @@ void test_4(std::ofstream &output) {
 
   grobner::PolynomialVector<type_rational> syst;
   grobner::Polynomial<type_rational> f1, f2;
-  std::array<degree_value_type, detail::gDefaultNumberOfVariables> d;
-  std::array<degree_value_type, detail::gDefaultNumberOfVariables> e;
+  std::array<degree_value_type, grobner::detail::gDefaultNumberOfVariables> d;
+  std::array<degree_value_type, grobner::detail::gDefaultNumberOfVariables> e;
   d.fill(0);
   e.fill(0);
   d[0] = 2;
@@ -213,8 +213,8 @@ void test_5(std::ofstream &output) {
 
   grobner::PolynomialVector<type_residue> syst;
   grobner::Polynomial<type_residue> f1, f2, f3, f4, g, ans;
-  std::array<degree_value_type, detail::gDefaultNumberOfVariables> d;
-  std::array<degree_value_type, detail::gDefaultNumberOfVariables> e;
+  std::array<degree_value_type, grobner::detail::gDefaultNumberOfVariables> d;
+  std::array<degree_value_type, grobner::detail::gDefaultNumberOfVariables> e;
   d.fill(0);
   e.fill(0);
   d[0] = 2;
