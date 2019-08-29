@@ -85,7 +85,7 @@ class Algorithm {
   }
 
  private:
-  using deg_container_type = typename Monomial<T, TNumberOfVariables>::deg_container_type; //maybe fix or not
+  using deg_container_type = std::array<typename Monomial<T, TNumberOfVariables>::degree_value_type, TNumberOfVariables>; //maybe fix or not
 
   Monomial<T, TNumberOfVariables>
   L(const Polynomial<T, TNumberOfVariables> &p) const {
