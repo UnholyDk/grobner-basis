@@ -24,6 +24,10 @@ class MonomialOrder {
     return !is_less(mon2, mon1);
   }
 
+  bool operator()(const monomial &mon1, const monomial &mon2) const {
+    return is_less(mon1, mon2);
+  }
+
   static const MonomialOrder &Lex() {
     static MonomialOrder LexOrder{[](const monomial &mon1,
                                      const monomial &mon2) {
