@@ -107,7 +107,7 @@ class Monomial {
   }
 
   bool operator==(const Monomial &other) const {
-    return coefficient_ == other.coefficient_ == 0 ||
+    return (coefficient_ == other.coefficient_ && other.coefficient_ == 0) ||
         (are_variable_parts_same(other) && coefficient_ == other.coefficient_);
   }
 
