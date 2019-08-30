@@ -13,6 +13,10 @@ class Polynomial {
     monomials_.emplace_back(std::move(monomial));
   }
 
+  Polynomial(index_type s) {
+    monomials_.reserve(s);
+  }
+
   auto begin() const { return monomials_.begin(); }
 
   auto end() const { return monomials_.end(); }
@@ -62,8 +66,48 @@ class Polynomial {
   }
 
   Polynomial &operator+=(const Polynomial &other) {
-    for (const auto &mon_from_other : other.monomials_) {
-      *this += mon_from_other;
+    Polynomial f = *this;
+    Polynomial g = other;
+    monomials_.clear();
+    monomials_.reserve(f.size() + g.size());
+    grobner::MonomialOrder<T> lex = grobner::MonomialOrder<T>::Lex();
+    std::sort((f.get_monomials()).begin(), (f.get_monomials()).end(),
+              [lex](Monomial<T, TNumberOfVariables> const &mon1,
+                    Monomial<T, TNumberOfVariables> const &mon2) {
+                return lex.is_less(mon1, mon2);
+              });
+    std::sort((g.get_monomials()).begin(), (g.get_monomials()).end(),
+              [lex](Monomial<T, TNumberOfVariables> const &mon1,
+                    Monomial<T, TNumberOfVariables> const &mon2) {
+                return lex.is_less(mon1, mon2);
+              });
+    index_type f_i = 0;
+    index_type g_i = 0;
+    while (f_i != f.size() && g_i != g.size()) {
+      if (f[f_i].are_variable_parts_same(g[g_i])) {
+        if (f[f_i].get_coefficient() != -g[g_i].get_coefficient()) {
+          f[f_i].get_coefficient() += g[g_i].get_coefficient();
+          monomials_.push_back(f[f_i]);
+        }
+        ++f_i;
+        ++g_i;
+      } else if (lex.is_less(f[f_i], g[g_i])) {
+        monomials_.push_back(f[f_i]);
+        ++f_i;
+      } else if (lex.is_less(g[g_i], f[f_i])) {
+        monomials_.push_back(g[g_i]);
+        ++g_i;
+      } else {
+        std::cout << "WATAFAKAMAZAFAKA\n";
+      }
+    }
+    while (f_i != f.size()) {
+      monomials_.push_back(f[f_i]);
+      ++f_i;
+    }
+    while (g_i != g.size()) {
+      monomials_.push_back(g[g_i]);
+      ++g_i;
     }
     return *this;
   }
