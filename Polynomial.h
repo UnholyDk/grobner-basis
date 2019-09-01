@@ -98,7 +98,7 @@ class Polynomial {
         monomials_.push_back(g[g_i]);
         ++g_i;
       } else {
-        std::cout << "WATAFAKAMAZAFAKA\n";
+        std::cout << "Error in polynomial operator*\n";
       }
     }
     while (f_i != f.size()) {
@@ -137,6 +137,7 @@ class Polynomial {
   Polynomial &operator*=(const Polynomial &other) {
     Polynomial tmp_p = *this;
     monomials_.clear();
+    monomials_.reserve(tmp_p.size() * other.size());
     for (const auto &mon_from_this : tmp_p.monomials_) {
       for (const auto &mon_from_other : other.monomials_) {
         *this += mon_from_this * mon_from_other;
