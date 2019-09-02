@@ -28,6 +28,10 @@ class MonomialOrder {
     return is_less(mon1, mon2);
   }
 
+  compare_container_type get_comparators() const {
+    return comparators_;
+  }
+
   static const MonomialOrder &Lex() {
     static MonomialOrder LexOrder{[](const monomial &mon1,
                                      const monomial &mon2) {
@@ -88,10 +92,10 @@ class MonomialOrder {
   }
 
   MonomialOrder &operator+=(const MonomialOrder &other) {
-    comparators_.reserve(comparators_.size() + other.size());
+    comparators_.reserve(comparators_.size() + (other.get_comparators()).size());
     comparators_.insert(comparators_.end(),
-                        other.begin(),
-                        other.end());
+                        (other.get_comparators()).begin(),
+                        (other.get_comparators()).end());
     return *this;
   }
 
