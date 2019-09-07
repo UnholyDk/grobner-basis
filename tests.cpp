@@ -3,13 +3,15 @@
 #include <boost/rational.hpp>
 #include "ResidueModulo.h"
 #include "wFile.h"
+#include <ctime>
+#include <time.h>
 
 using type_rational = boost::rational<int>;
 using type_residue = ResidueModulo;
 
-void test_1(std::ofstream &output) {
+void test_1(std::ofstream &output, std::ofstream &output_time) {
   using degree_value_type = grobner::Monomial<type_rational>::degree_value_type;
-
+  unsigned int start_time = clock();
   grobner::PolynomialVector<type_rational> syst;
   grobner::Polynomial<type_rational> f1, f2, f3, f4, g, ans;
   std::array<degree_value_type, grobner::detail::gDefaultNumberOfVariables> d;
@@ -68,11 +70,14 @@ void test_1(std::ofstream &output) {
   grobner::MonomialOrder<type_rational> lex = grobner::MonomialOrder<type_rational>::Lex();
   grobner::Algorithm<type_rational> alg(lex);
   output << alg.reduction(g, syst) << "\n"; // ans = -0.5ac^4
+  unsigned int end_time = clock();
+  unsigned int search_time = end_time - start_time;
+  output_time << "Test works " << search_time << " milliseconds" << '\n';
 }
 
-void test_2(std::ofstream &output) {
+void test_2(std::ofstream &output, std::ofstream &output_time) {
   using degree_value_type = grobner::Monomial<type_rational>::degree_value_type;
-
+  unsigned int start_time = clock();
   grobner::PolynomialVector<type_rational> syst;
   grobner::Polynomial<type_rational> f1, f2, g;
   std::array<degree_value_type, grobner::detail::gDefaultNumberOfVariables> d;
@@ -112,11 +117,14 @@ void test_2(std::ofstream &output) {
   grobner::Algorithm<type_rational> alg(lex);
   syst = alg.Buchberger(syst);
   output << alg.reduction(g, syst) << "\n"; // ans = -0.5ac^4
+  unsigned int end_time = clock();
+  unsigned int search_time = end_time - start_time;
+  output_time << "Test works " << search_time << " milliseconds" << '\n';
 }
 
-void test_3(std::ofstream &output) {
+void test_3(std::ofstream &output, std::ofstream &output_time) {
   using degree_value_type = grobner::Monomial<type_rational>::degree_value_type;
-
+  unsigned int start_time = clock();
   grobner::PolynomialVector<type_rational> syst;
   grobner::Polynomial<type_rational> f1, f2, f3;
   std::array<degree_value_type, grobner::detail::gDefaultNumberOfVariables> d;
@@ -158,11 +166,14 @@ void test_3(std::ofstream &output) {
   grobner::Algorithm<type_rational> alg(lex);
   syst = alg.Buchberger(syst);
   output << syst[3] << "\n"; // ans = +(-2b)+(-1b^2)
+  unsigned int end_time = clock();
+  unsigned int search_time = end_time - start_time;
+  output_time << "Test works " << search_time << " milliseconds" << '\n';
 }
 
-void test_4(std::ofstream &output) {
+void test_4(std::ofstream &output, std::ofstream &output_time) {
   using degree_value_type = grobner::Monomial<type_rational>::degree_value_type;
-
+  unsigned int start_time = clock();
   grobner::PolynomialVector<type_rational> syst;
   grobner::Polynomial<type_rational> f1, f2;
   std::array<degree_value_type, grobner::detail::gDefaultNumberOfVariables> d;
@@ -198,11 +209,14 @@ void test_4(std::ofstream &output) {
   grobner::Algorithm<type_rational> alg(lex);
   syst = alg.Buchberger(syst);
   output << syst[2] << "\n"; // ans = +(-1c^3)+(-2ac^2)+(-1a^2)
+  unsigned int end_time = clock();
+  unsigned int search_time = end_time - start_time;
+  output_time << "Test works " << search_time << " milliseconds" << '\n';
 }
 
-void test_5(std::ofstream &output) {
+void test_5(std::ofstream &output, std::ofstream &output_time) {
   using degree_value_type = grobner::Monomial<type_residue>::degree_value_type;
-
+  unsigned int start_time = clock();
   ResidueModulo a1(1, 7);
   ResidueModulo a2(-1, 7);
   ResidueModulo a3(5, 7);
@@ -268,21 +282,66 @@ void test_5(std::ofstream &output) {
   grobner::MonomialOrder<type_residue> lex = grobner::MonomialOrder<type_residue>::Lex();
   grobner::Algorithm<type_residue> alg(lex);
   output << alg.reduction(g, syst) << "\n"; // ans = 5a^2c^4
+  unsigned int end_time = clock();
+  unsigned int search_time = end_time - start_time;
+  output_time << "Test works " << search_time << " milliseconds" << '\n';
+}
+
+void test_6(std::ofstream &output, std::ofstream &output_time) {
+  using degree_value_type = grobner::Monomial<type_rational>::degree_value_type;
+  unsigned int start_time = clock();
+  grobner::PolynomialVector<type_rational> syst;
+  grobner::Polynomial<type_rational> f1, f2, f3;
+  std::array<degree_value_type, grobner::detail::gDefaultNumberOfVariables> d;
+  std::array<degree_value_type, grobner::detail::gDefaultNumberOfVariables> e;
+  std::array<degree_value_type, grobner::detail::gDefaultNumberOfVariables> a;
+  d.fill(0);
+  e.fill(0);
+  a.fill(0);
+  d[0] = 1;
+  d[1] = 0;
+  d[2] = 0;
+  e[0] = 0;
+  e[1] = 1;
+  e[2] = 0;
+  grobner::Monomial<type_rational> f11(1, d), f12(1, e);
+  f1 += f11;
+  f1 += f12;
+  syst.add_pol(f1);
+  d[0] = 0;
+  d[1] = 2;
+  d[2] = 0;
+  e[0] = 0;
+  e[1] = 0;
+  e[2] = 0;
+  grobner::Monomial<type_rational> f21(1, d), f22(-1, e);
+  f2 += f21;
+  f2 += f22;
+  syst.add_pol(f2);
+  grobner::MonomialOrder<type_rational> lex = grobner::MonomialOrder<type_rational>::Lex();
+  grobner::Algorithm<type_rational> alg(lex);
+  syst = alg.Buchberger(syst);
+  output << syst.size() << "\n";
+  unsigned int end_time = clock();
+  unsigned int search_time = end_time - start_time;
+  output_time << "Test works " << search_time << " milliseconds" << '\n';
 }
 
 void all_tests() {
   wFile output("output.txt");
-  test_1(output());
-  test_2(output());
-  test_3(output());
-  test_4(output());
-  test_5(output());
+  wFile output_time("output_time.txt");
+  test_1(output(), output_time());
+  test_2(output(), output_time());
+  test_3(output(), output_time());
+  test_4(output(), output_time());
+  test_5(output(), output_time());
+  test_6(output(), output_time());
 }
 
 bool check() {
   all_tests();
   std::vector<std::string>
-      true_ans = {"(-1/2ac^4)", "(-1/2ac^4)", "(-2/1b)+(-b^2)", "(-c^3)+(-2/1ac^2)+(-a^2)", "(5a^2c^4)"};
+      true_ans = {"(-1/2ac^4)", "(-1/2ac^4)", "(-2/1b)+(-b^2)", "(-c^3)+(-2/1ac^2)+(-a^2)", "(5a^2c^4)", "2"};
   std::ifstream output("output.txt");
   std::string curr_ans;
   for (size_t test_id = 1; test_id <= true_ans.size();
