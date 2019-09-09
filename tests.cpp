@@ -69,7 +69,7 @@ void test_1(std::ofstream &output, std::ofstream &output_time) {
   g += g2;
   grobner::MonomialOrder<type_rational> lex = grobner::MonomialOrder<type_rational>::Lex();
   grobner::Algorithm<type_rational> alg(lex);
-  output << alg.reduction(g, syst) << "\n"; // ans = -0.5ac^4
+  output << alg.reduction(g, syst) << ";\n"; // ans = -0.5ac^4
   unsigned int end_time = clock();
   unsigned int search_time = end_time - start_time;
   output_time << "Test works " << search_time << " milliseconds" << '\n';
@@ -116,7 +116,15 @@ void test_2(std::ofstream &output, std::ofstream &output_time) {
   grobner::MonomialOrder<type_rational> lex = grobner::MonomialOrder<type_rational>::Lex();
   grobner::Algorithm<type_rational> alg(lex);
   syst = alg.Buchberger(syst);
-  output << alg.reduction(g, syst) << "\n"; // ans = -0.5ac^4
+
+  auto it = syst.begin();
+  output << *it;
+  while (it != syst.end()) {
+    output << ", " << *it;
+    ++it;
+  }
+  output << ";\n";
+
   unsigned int end_time = clock();
   unsigned int search_time = end_time - start_time;
   output_time << "Test works " << search_time << " milliseconds" << '\n';
@@ -165,7 +173,15 @@ void test_3(std::ofstream &output, std::ofstream &output_time) {
       lex = grobner::MonomialOrder<type_rational>::Lex();
   grobner::Algorithm<type_rational> alg(lex);
   syst = alg.Buchberger(syst);
-  output << syst[3] << "\n"; // ans = +(-2b)+(-1b^2)
+
+  auto it = syst.begin();
+  output << *it;
+  while (it != syst.end()) {
+    output << ", " << *it;
+    ++it;
+  }
+  output << ";\n";
+
   unsigned int end_time = clock();
   unsigned int search_time = end_time - start_time;
   output_time << "Test works " << search_time << " milliseconds" << '\n';
@@ -208,7 +224,15 @@ void test_4(std::ofstream &output, std::ofstream &output_time) {
   grobner::MonomialOrder<type_rational> lex = grobner::MonomialOrder<type_rational>::Lex();
   grobner::Algorithm<type_rational> alg(lex);
   syst = alg.Buchberger(syst);
-  output << syst[2] << "\n"; // ans = +(-1c^3)+(-2ac^2)+(-1a^2)
+
+  auto it = syst.begin();
+  output << *it;
+  while (it != syst.end()) {
+    output << ", " << *it;
+    ++it;
+  }
+  output << ";\n";
+
   unsigned int end_time = clock();
   unsigned int search_time = end_time - start_time;
   output_time << "Test works " << search_time << " milliseconds" << '\n';
@@ -281,7 +305,9 @@ void test_5(std::ofstream &output, std::ofstream &output_time) {
   g += g2;
   grobner::MonomialOrder<type_residue> lex = grobner::MonomialOrder<type_residue>::Lex();
   grobner::Algorithm<type_residue> alg(lex);
-  output << alg.reduction(g, syst) << "\n"; // ans = 5a^2c^4
+
+  output << alg.reduction(g, syst) << ";\n"; // ans = 5a^2c^4
+
   unsigned int end_time = clock();
   unsigned int search_time = end_time - start_time;
   output_time << "Test works " << search_time << " milliseconds" << '\n';
@@ -321,7 +347,15 @@ void test_6(std::ofstream &output, std::ofstream &output_time) {
   grobner::MonomialOrder<type_rational> lex = grobner::MonomialOrder<type_rational>::Lex();
   grobner::Algorithm<type_rational> alg(lex);
   syst = alg.Buchberger(syst);
-  output << syst.size() << "\n";
+
+  auto it = syst.begin();
+  output << *it;
+  while (it != syst.end()) {
+    output << ", " << *it;
+    ++it;
+  }
+  output << ";\n";
+
   unsigned int end_time = clock();
   unsigned int search_time = end_time - start_time;
   output_time << "Test works " << search_time << " milliseconds" << '\n';
