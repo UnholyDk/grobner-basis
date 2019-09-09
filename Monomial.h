@@ -115,6 +115,15 @@ class Monomial {
   bool operator!=(const Monomial &other) const { return !(*this == other); }
 
   friend inline std::ostream &operator<<(std::ostream &os, const Monomial &monomial) {
+    bool f = true;
+    for (index_type index = 0; index < monomial.amount_of_variables(); ++index) {
+      if (monomial[index] != 0)
+        f = false;
+    }
+    if (f) {
+      os << monomial.get_coefficient();
+      return os;
+    }
     print_coefficient(os, monomial.get_coefficient());
     if (monomial.get_coefficient() != 0)
       print_variables(os, monomial);
