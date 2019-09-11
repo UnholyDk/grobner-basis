@@ -61,6 +61,18 @@ class Algorithm {
         if (red_s_pol.amount_of_monomials() != 0) {
           ans_syst.add_pol(red_s_pol);
         }
+        while (red_s_pol.amount_of_monomials() != 0) {
+          for (size_t i = 0; i < ans_syst.size(); ++i) {
+            for (int j = i - 1; j >=0; --j) {
+              red_s_pol = reduction(S(ans_syst[i], ans_syst[j]), ans_syst);
+              if (red_s_pol.amount_of_monomials() == 0)
+                break;
+              if (red_s_pol.amount_of_monomials() != 0) {
+                ans_syst.add_pol(red_s_pol);
+              }
+            }
+          }
+        }
       }
     }
     return ans_syst;
