@@ -96,7 +96,7 @@ class Algorithm {
   deegs_common_division(const Monomial<T, TNumberOfVariables> &m_1,
                         const Monomial<T, TNumberOfVariables> &m_2) const {
     deg_container_type tmp_deegs_1, tmp_deegs_2;
-    for (size_t i = 0; i < 26; ++i) {
+    for (size_t i = 0; i < grobner::detail::gDefaultNumberOfVariables; ++i) {
       tmp_deegs_1[i] = std::max(m_1[i], m_2[i]) - m_1[i];
       tmp_deegs_2[i] = std::max(m_1[i], m_2[i]) - m_2[i];
     }

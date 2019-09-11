@@ -9,7 +9,7 @@
 
 namespace grobner {
 namespace detail {
-constexpr size_t gDefaultNumberOfVariables = 26;
+constexpr size_t gDefaultNumberOfVariables = 6;
 }
 using index_type = size_t;
 template<class TCoefficient, index_type TNumberOfVariables = detail::gDefaultNumberOfVariables>
@@ -43,7 +43,7 @@ class Monomial {
   }
 
   degree_value_type operator[](index_type index) const {
-    assert(index < degrees_.size());
+    assert(index <= degrees_.size());
     return degrees_[index];
   }
 
