@@ -43,7 +43,7 @@ class Monomial {
   }
 
   degree_value_type operator[](index_type index) const {
-    assert(index <= degrees_.size());
+    assert(index < degrees_.size());
     return degrees_[index];
   }
 
